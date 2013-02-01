@@ -1,0 +1,157 @@
+#
+# Copyright (C) 2011 The CyanogenMod Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+# common msm8960 configs
+$(call inherit-product, device/htc/msm8960-common/msm8960.mk)
+
+DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
+
+# Boot ramdisk setup
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/ramdisk/fstab.dlx:root/fstab.dlx \
+    device/htc/dlx/ramdisk/init.dlx.rc:root/init.dlx.rc \
+    device/htc/dlx/ramdisk/init.dlx.usb.rc:root/init.dlx.usb.rc \
+    device/htc/dlx/ramdisk/ueventd.dlx.rc:root/ueventd.dlx.rc
+
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/prebuilt/bootanimation.zip:system/media/bootanimation.zip
+
+# NFCEE access control
+ifeq ($(TARGET_BUILD_VARIANT),user)
+    NFCEE_ACCESS_PATH := device/htc/dlx/configs/nfcee_access.xml
+else
+    NFCEE_ACCESS_PATH := device/htc/dlx/configs/nfcee_access_debug.xml
+endif
+PRODUCT_COPY_FILES += \
+    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml
+
+# HTC BT audio config
+PRODUCT_COPY_FILES += device/htc/dlx/configs/AudioBTID.csv:system/etc/AudioBTID.csv
+
+# QC thermald config
+PRODUCT_COPY_FILES += device/htc/msm8960-common/configs/thermald.conf:system/etc/thermald.conf
+
+# vold config
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/configs/vold.fstab:system/etc/vold.fstab
+
+# wifi config
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/configs/wpa_supplicant.conf:/system/etc/wifi/wpa_supplicant.conf
+
+# Sound configs
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/dsp/soundimage/srs_bypass.cfg:system/etc/soundimage/srs_bypass.cfg \
+    device/htc/dlx/dsp/soundimage/srsfx_trumedia_51.cfg:system/etc/soundimage/srsfx_trumedia_51.cfg \
+    device/htc/dlx/dsp/soundimage/srsfx_trumedia_movie.cfg:system/etc/soundimage/srsfx_trumedia_movie.cfg \
+    device/htc/dlx/dsp/soundimage/srsfx_trumedia_music.cfg:system/etc/soundimage/srsfx_trumedia_music.cfg \
+    device/htc/dlx/dsp/soundimage/srsfx_trumedia_voice.cfg:system/etc/soundimage/srsfx_trumedia_voice.cfg \
+    device/htc/dlx/dsp/soundimage/srs_geq10.cfg:system/etc/soundimage/srs_geq10.cfg \
+    device/htc/dlx/dsp/soundimage/srs_global.cfg:system/etc/soundimage/srs_global.cfg
+
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x:/system/etc/snd_soc_msm/snd_soc_msm_2x 
+
+# Keylayouts and Keychars
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl \
+    device/htc/dlx/keylayout/dummy_keypad.kl:system/usr/keylayout/dummy_keypad.kl \
+    device/htc/dlx/keylayout/Generic.kl:system/usr/keylayout/Generic.kl \
+    device/htc/dlx/keylayout/projector-Keypad.kl:system/usr/keylayout/projector-Keypad.kl \
+    device/htc/dlx/keylayout/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl \
+    device/htc/dlx/keylayout/keypad_8960.kl:system/usr/keylayout/keypad_8960.kl \
+    device/htc/dlx/keylayout/msm8960-snd-card_Button_Jack.kl:system/usr/keylayout/msm8960-snd-card_Button_Jack.kl \
+    device/htc/dlx/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl \
+    device/htc/dlx/keylayout/synaptics-rmi-touchscreen.kl:system/usr/keylayout/synaptics-rmi-touchscreen.kl \
+    device/htc/dlx/keylayout/Vendor_045e_Product_028e.kl:system/usr/keylayout/Vendor_045e_Product_028e.kl \
+    device/htc/dlx/keylayout/Vendor_046d_Product_c216.kl:system/usr/keylayout/Vendor_046d_Product_c216.kl \
+    device/htc/dlx/keylayout/Vendor_046d_Product_c294.kl:system/usr/keylayout/Vendor_046d_Product_c294.kl \
+    device/htc/dlx/keylayout/Vendor_046d_Product_c299.kl:system/usr/keylayout/Vendor_046d_Product_c299.kl \
+    device/htc/dlx/keylayout/Vendor_046d_Product_c532.kl:system/usr/keylayout/Vendor_046d_Product_c532.kl \
+    device/htc/dlx/keylayout/Vendor_054c_Product_0268.kl:system/usr/keylayout/Vendor_054c_Product_0268.kl \
+    device/htc/dlx/keylayout/Vendor_05ac_Product_0239.kl:system/usr/keylayout/Vendor_05ac_Product_0239.kl \
+    device/htc/dlx/keylayout/Vendor_22b8_Product_093d.kl:system/usr/keylayout/Vendor_22b8_Product_093d.kl 
+
+# Input device config
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/idc/projector_input.idc:system/usr/idc/projector_input.idc \
+    device/htc/dlx/idc/qwerty2.idc:system/usr/idc/qwerty2.idc \
+    device/htc/dlx/idc/qwerty.idc:system/usr/idc/qwerty.idc \
+    device/htc/dlx/idc/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc
+
+# GPS
+PRODUCT_PACKAGES += \
+        libloc_adapter \
+        libloc_eng \
+        libloc_api_v02 \
+        libgps.utils \
+        gps.msm8960
+
+# NFC
+PRODUCT_PACKAGES += \
+    libnfc \
+    libnfc_ndef \
+    libnfc_jni \
+    Nfc \
+    Tag \
+    com.android.nfc_extras
+
+# Torch
+PRODUCT_PACKAGES += \
+    Torch
+
+# Permissions
+PRODUCT_COPY_FILES += \
+        frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+        frameworks/base/nfc-extras/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
+        frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
+        frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
+
+# Extra properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.setupwizard.enable_bypass=1 \
+    dalvik.vm.lockprof.threshold=500 \
+    ro.com.google.locationfeatures=1 \
+    dalvik.vm.dexopt-flags=m=y
+
+# We have enough space to hold precise GC data
+PRODUCT_TAGS += dalvik.gc.type-precise
+
+PRODUCT_CHARACTERISTICS := nosdcard
+
+# Set build date
+PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
+
+# Device uses high-density artwork where available
+PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
+PRODUCT_AAPT_PREF_CONFIG := xhdpi
+PRODUCT_LOCALES += en_US xhdpi
+
+# call the proprietary setup
+$(call inherit-product-if-exists, vendor/htc/dlx/dlx-vendor.mk)
+
+# call dalvik heap config
+$(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
+
+# Discard inherited values and use our own instead.
+PRODUCT_DEVICE := dlx
+PRODUCT_NAME := cm_dlx
+PRODUCT_BRAND := htc
+PRODUCT_MODEL := DNA
+PRODUCT_MANUFACTURER := HTC

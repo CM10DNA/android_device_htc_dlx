@@ -1,0 +1,652 @@
+
+#start camera server as daemon
+service qcamerasvr /system/bin/mm-qcamera-daemon
+        class late_start
+        user system
+        group system camera inet graphics
+
+
+# on emmc mount the partition containing firmware
+on emmc-fs
+   mkdir /system
+   devwait emmc@system
+   mount ext4 emmc@system /system ro noatime barrier=1
+
+   mkdir /data 0771 system system
+   mkdir /reserve 0771 system system
+   devwait emmc@userdata
+   mount_all /fstab.dlx
+
+   mkdir /cache 0770 system cache
+   devwait emmc@cache
+   mount ext4 emmc@cache /cache nosuid nodev noatime barrier=1
+
+   mkdir /devlog2 0700 root root
+   devwait emmc@devlog
+   mount ext4 emmc@devlog /devlog nosuid nodev noatime barrier=1
+
+   mkdir /ramdump 0700 root root
+   devwait emmc@reserve
+   mount vfat emmc@reserve /ramdump rw
+   umount /ramdump
+
+   mkdir /data/tombstones 0771 system system
+   symlink /data/tombstones /tombstones
+   mkdir /tombstones/mdm 0771 system system
+   mkdir /tombstones/modem 0771 system system
+   mkdir /tombstones/lpass 0771 system system
+   mkdir /tombstones/dsps 0771 system system
+
+   # For firmwares
+   mkdir /firmware 0771 system system
+   mkdir /vendor 0771 system system
+   mkdir /vendor/firmware 0771 system system
+
+   # 8064 has only mdm, use radio partition for it.
+   mkdir /firmware/mdm 0771 system system
+   devwait emmc@radio
+   mount vfat emmc@radio /firmware/mdm ro shortname=lower
+   exec /system/bin/sh /init.qcom.firmware_links.sh /firmware/mdm/image /vendor/firmware "*.mbn *.img"
+
+   mkdir /data/qcks 0700 root system
+   mount tmpfs tmpfs /data/qcks size=20m,mode=0750,gid=1000
+
+   mkdir /data/efs 0700 root system
+   mount tmpfs tmpfs /data/efs size=20m,mode=0750,gid=1000
+
+   # 8064 need to created this folder for CSD-QMI usage
+   mkdir /data/audio 0775 media audio
+   chmod 2775 /data/audio
+
+   mkdir /firmware/q6 0771 system system
+   devwait emmc@adsp
+   mount vfat emmc@adsp /firmware/q6 ro shortname=lower
+   exec /system/bin/sh /init.qcom.firmware_links.sh /firmware/q6 /vendor/firmware "q6.*"
+
+   # link widevine drm library path
+   symlink /system/vendor/lib /vendor/lib
+
+   mkdir /storage 0050 system sdcard_r
+   mkdir /storage/sdcard0 0000 system system
+   mkdir /storage/usb 0000 system system
+   
+   exec /system/bin/sh mount -o remount,rw /dev/block/mmcblk0p32 /system
+
+on init
+
+    import init.sensors.rc
+
+    # htc_ebdlog
+    chown root root /devlog
+    chmod 0700 /devlog
+
+    # setup the global environment
+    export EXTERNAL_STORAGE /storage/sdcard0
+    export EXTERNAL_STORAGE4 /storage/usb
+    export EXTERNAL_STORAGE5 /storage/usb
+
+    # create mountpoints
+        rm /sdcard
+        symlink /storage/sdcard0 /sdcard
+        symlink /storage/sdcard0 /mnt/sdcard
+        symlink /storage/usb     /mnt/usb
+
+    # NETWORK: NAT setting
+    # To prevent out of WINDOW ACK from making
+    # connection tracking to treat them as INVALID packet
+        write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
+
+    # for pnp thermal condition
+    write sys/power/pnpmgr/thermal/thermal_c0 1512000
+    write sys/power/pnpmgr/thermal/thermal_c1 1512000
+    write sys/power/pnpmgr/thermal/thermal_c2 1512000
+    write sys/power/pnpmgr/thermal/thermal_c3 1512000
+    write sys/power/pnpmgr/thermal/thermal_final 1512000
+    write sys/power/pnpmgr/thermal/thermal_g0 400000000
+
+on post-fs-data
+    mkdir /data/radio 0770 radio radio
+    chmod 2770 /data/radio
+    
+#+SSD_RIL: from Qualcomm socket path
+    chmod 2770 /dev/socket/qmux_radio
+    mkdir /dev/socket/qmux_audio 0770 audio audio
+    chmod 2770 /dev/socket/qmux_audio
+    mkdir /dev/socket/qmux_bluetooth 0770 bluetooth bluetooth
+    chmod 2770 /dev/socket/qmux_bluetooth
+#-SSD_RIL: from Qualcomm socket path
+
+    # HTC add: 3LM setting on ICS
+    setprop ro.3lm.production 1
+
+    # HTC add: 3LM encryption on ICS
+    setprop ro.3lm.legacy_encryption 1
+    mkdir /data/secure 0755 system system
+    mkdir /data/secure/data 0755 system system
+    mount tmpfs tmpfs /data/secure/data mode=0755,gid=1000
+
+	# HTC add: double check the perms of /data/data for already existed case
+	chown system system /data/data
+	chmod 0771 /data/data
+
+	# If there is no fs-post-data action in the init.<device>.rc file, you
+	# must uncomment this line, otherwise encrypted filesystems
+	# won't work.
+	# Set indication (checked by vold) that we have finished this action
+	setprop vold.post_fs_data_done 1
+
+on boot
+   # we will remap this as /mnt/sdcard with the sdcard fuse tool
+   mkdir /data/media 0775 media_rw media_rw
+   chown media_rw media_rw /data/media
+   setprop ro.crypto.fuse_sdcard true
+
+   # give system access to wpa_supplicant.conf for backup and restore
+   mkdir /data/misc/wifi/sockets 0771 wifi wifi
+   mkdir /data/misc/dhcp 0755 wifi wifi
+   chown dhcp dhcp /data/misc/dhcp
+   chmod 0770 /data/misc/wifi
+
+   write /sys/devices/i2c-3/3-0024/cyttsp_update_fw 1
+   
+   start qcamerasvr
+
+#BT +
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chmod 0660 /proc/bluetooth/sleep/proto
+    chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
+#BT -
+
+#simlock +
+    chown radio radio /dev/simlock
+    chmod 0660 /dev/simlock
+#simlock -
+
+#DRM +
+    chown drm system /dev/htcdrm
+    chmod 0660 /dev/htcdrm
+#DRM -
+
+# HTC SSD Peripheral UI - BEGIN
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/red/blink
+    chown system system /sys/class/leds/red/off_timer
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/green/blink
+    chown system system /sys/class/leds/green/off_timer
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/blue/blink
+    chown system system /sys/class/leds/blue/off_timer
+    chown system system /sys/class/leds/amber/brightness
+    chown system system /sys/class/leds/amber/blink
+    chown system system /sys/class/leds/amber/off_timer
+    chown system system /sys/class/leds/button-backlight-portrait/brightness
+    chown system system /sys/class/leds/button-backlight-landscape/brightness
+    chown system system /sys/class/leds/amber-portrait/brightness
+    chown system system /sys/class/leds/green-portrait/brightness
+    chown system system /sys/class/leds/blue-portrait/brightness
+    chown system system /sys/class/leds/amber-landscape/brightness
+    chown system system /sys/class/leds/green-landscape/brightness
+    chown system system /sys/class/leds/blue-landscape/brightness
+    chown system system /sys/class/leds/sharekey/brightness
+    chown system system /sys/class/leds/sharekey/breath_times
+    chown system system /sys/class/leds/sharekey/breath_max_brightness
+    chown system system /sys/class/leds/charming-led/brightness
+    chown system system /sys/class/leds/charming-led/blink
+    chown system system /sys/class/leds/charming-led/off_timer
+    chown system system /sys/class/leds/flashlight/brightness
+    chown system system /sys/class/leds/caps/brightness
+    chown system system /sys/class/leds/func/brightness
+    chown media media /sys/class/leds/green-camera/brightness
+    chown system system /sys/devices/virtual/htc_accessory/fm/flag
+    chown system system /sys/devices/virtual/htc_accessory/tty/flag
+    chown system system /sys/class/leds/indicator/ModeRGB
+# HTC SSD Peripheral UI - END
+
+# permissions for NFC
+    chmod 0600 /dev/pn544
+    chown nfc nfc /dev/pn544
+	setprop debug.nfc.fw_download "true"
+	setprop debug.nfc.fw_boot_download "false"
+
+    # disable L27 S3 static pull down disable
+    write /sys/kernel/debug/pm8921-dbg/addr 0x0E3
+    write /sys/kernel/debug/pm8921-dbg/data 0xA0
+    write /sys/kernel/debug/pm8921-dbg/addr 0x1F5
+    write /sys/kernel/debug/pm8921-dbg/data 0xE1
+
+    # Load bcmdhd.ko while booting
+    chmod 0444 /system/lib/modules/bcmdhd.ko
+    insmod /system/lib/modules/bcmdhd.ko
+
+    write /proc/sys/net/ipv6/conf/p2p0/disable_ipv6 1
+
+    # create symlink for fb1 as HDMI
+    #symlink /dev/graphics/fb1 /dev/graphics/hdmi
+  
+    # Remove write permissions to video related nodes
+    chmod 0664 /sys/devices/virtual/graphics/fb1/hpd
+    chmod 0664 /sys/devices/virtual/graphics/fb1/video_mode
+    chmod 0664 /sys/devices/virtual/graphics/fb1/format_3d
+
+    # Change owner and group for media server and surface flinger
+    chown system system /sys/devices/virtual/graphics/fb1/format_3d
+
+#++SSD_GPS
+    mkdir /dev/socket/qmux_gps 0770 gps gps
+    chmod 2770 /dev/socket/qmux_gps
+
+    #Create directories for QuIPS
+    mkdir /data/misc/quipc 0770 gps system
+
+    #Create directories for Location services
+    mkdir /data/misc/location 0770 gps gps
+    mkdir /data/misc/location/mq 0770 gps gps
+#--SSD_GPS
+
+#++SSD_AUDIO
+    chown system audio /dev/tfa9887
+    chmod 0664 /dev/tfa9887
+#--SSD_AUDIO
+
+# set RLIMIT_NICE to allow priorities from 19 to -20
+    setrlimit 8 268435456 268435456
+
+# HTC SSD Camera
+    chown media system /sys/camera_htccallback/htccallback
+    chown media system /sys/camera_attrs/videochat
+
+# HTC SSD USB
+    chown system system /sys/class/android_usb/f_modem/on
+    chown system system /sys/class/android_usb/f_diag/on
+    chown system system /sys/class/android_usb/f_rmnet/on
+
+#set diag permissions
+    chown radio radio /dev/diag
+    chown radio radio /dev/diag_mdm
+    chown radio radio /dev/htcdiag
+    chown radio radio /dev/diag_arm9
+    chown radio radio /dev/btdiag
+    chmod 0660 /dev/diag
+    chmod 0660 /dev/diag_mdm
+    chmod 0660 /dev/htcdiag
+    chmod 0660 /dev/diag_arm9
+    chmod 0660 /dev/btdiag
+
+	chown root system /proc/driver/hdf
+	chmod 0664 /proc/driver/hdf
+
+#set touch permissions
+    chown system system /sys/android_touch/unlock
+
+# HTC SSD Camera
+    chown media system /sys/camera_htccallback/htccallback
+    chown media system /sys/camera_attrs/videochat
+
+# HTC SSD Battery - BEGIN
+# for RIL to notify battery driver talking and network_search state
+    chown radio radio /sys/class/power_supply/battery/phone_call
+    chmod 0220 /sys/class/power_supply/battery/phone_call
+    chown radio radio /sys/class/power_supply/battery/network_search
+    chmod 0220 /sys/class/power_supply/battery/network_search
+    chown system system /sys/class/power_supply/battery/navigation
+    chmod 0220 /sys/class/power_supply/battery/navigation
+# HTC SSD Battery - END
+
+# Define TCP buffer sizes for various networks
+#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
+    setprop net.tcp.buffersize.lte     4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.umts    4094,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.hspa    4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hsupa   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hsdpa   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
+    setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
+    setprop net.tcp.buffersize.evdo_b  4094,87380,262144,4096,16384,262144
+
+# Assign TCP buffer thresholds to be ceiling value of technology maximums
+# Increased technology maximums should be reflected here.
+    write /proc/sys/net/core/rmem_max  1220608
+    write /proc/sys/net/core/wmem_max  1220608
+
+    # Discretix DRM change start
+    mkdir /data/DxDrm
+    mkdir /data/DxDrm/fuse
+    chmod 555 /data/DxDrm
+    mkdir /sdcard/download
+    # Discretix DRM change end
+
+# To prevent out of order acknowledgements from making
+# connection tracking to treat them as not belonging to
+# the connection they belong to.
+# Otherwise, a weird issue happens in which some long
+# connections on high-throughput links get dropped when
+# an ack packet comes out of order
+    write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
+
+
+
+		### Start up ###
+		
+    write /data/system/sensors/settings 1
+    exec /system/bin/sh start sensors
+    chown root system /sys/devices/platform/msm_otg/msm_hsusb/gadget/wakeup
+    chmod 220 /sys/devices/platform/msm_otg/msm_hsusb/gadget/wakeup
+  
+
+
+
+
+
+    # enable sleep_clk2 on DLX XC board only
+on property:ro.devicerev=2
+    mount -t debugfs none /sys/kernel/debug
+    write /sys/kernel/debug/pm8921-dbg/addr 0x10d
+    write /sys/kernel/debug/pm8921-dbg/data 0x08
+    write /sys/kernel/debug/pm8921-dbg/addr 0x10c
+    write /sys/kernel/debug/pm8921-dbg/data 0x10
+    write /sys/kernel/debug/pm8921-dbg/addr 0x10b
+    write /sys/kernel/debug/pm8921-dbg/data 0x22
+    
+service thermald /system/bin/thermald
+    class core
+    user root
+    group root
+
+service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
+    class core
+    user root
+    disabled
+
+service pnpmgr /system/bin/pnpmgr
+    class core
+    user root
+    disabled
+
+service adaptive /system/bin/adaptive -c 0 -s 150 -b 210
+    class core
+    user root
+    disabled
+
+service kickstart /system/bin/qcks -1 modem_st1 -2 modem_st2 -3 radio_config -4 cdma_record -i /vendor/firmware/
+		class core
+		user root
+		oneshot
+
+service memlock /system/bin/memlock
+    class main
+    cgroup bg
+    user root
+
+service usf_tester /system/bin/usf_tester
+    user system
+    group system inet
+    disabled
+
+service usf_epos /system/bin/usf_epos
+    user system
+    group system inet
+    disabled
+
+service usf_gesture /system/bin/usf_gesture
+    user system
+    group system inet
+    disabled
+
+service usf_p2p /system/bin/usf_p2p
+    user system
+    group system inet
+    disabled
+
+service usf_hovering /system/bin/usf_hovering
+    user system
+    group system inet
+    disabled
+
+service usf-post-boot /system/bin/sh /system/etc/usf_post_boot.sh
+    class late_start
+    user root
+    disabled
+    oneshot
+
+#service qcom-wifi /system/bin/sh /system/etc/init.qcom.wifi.sh
+#    oneshot
+
+# create virtual SD card at /mnt/sdcard, based on the /data/media directory
+# daemon will drop to user/group system/media_rw after initializing
+# underlying files in /data/media will be created with user and group media_rw (1023)
+
+service sdcard /system/bin/sdcard /data/media 1023 1023
+    class late_start
+
+# wifi ++
+service p2p_supplicant /system/bin/wpa_supplicant \
+	-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
+	-ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
+	#   we will start as root and wpa_supplicant will switch to user wifi
+	#   after setting up the capabilities required for WEXT
+	#   user wifi
+	#   group wifi inet keystore
+	class main
+	socket wpa_wlan0 dgram 660 wifi wifi
+	disabled
+	oneshot
+
+service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf -puse_p2p_group_interface=1
+#   we will start as root and wpa_supplicant will switch to user wifi
+#   after setting up the capabilities required for WEXT
+#   user wifi
+#   group wifi inet keystore
+    socket wpa_wlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -aABKL
+	disabled
+	oneshot
+
+service iprenew_wlan0 /system/bin/dhcpcd -n
+	disabled
+	oneshot
+
+service iprenew_p2p /system/bin/dhcpcd -n
+	disabled
+	oneshot
+# wifi--
+
+on property:init.svc.bootanim=stopped
+    start usf-post-boot
+    start post-boot
+    # Overwrite ActivityManager's low memory killer settings
+    write /sys/module/lowmemorykiller/parameters/adj 0,2,4,7,9,12
+
+service post-boot /system/bin/sh /system/etc/init.post_boot.sh
+    user root
+    disabled
+    oneshot
+
+#++SSD_BT
+service btld /system/bin/btld -lpm 1 -hb 3000000
+    user root
+    group bluetooth net_bt_admin
+    disabled
+    onrestart restart bluetoothd
+
+service dhcpcd_brcm-pan /system/bin/dhcpcd -ABKL
+    disabled
+    oneshot
+#--SSD_BT
+
+#DMagent
+service dmagent /system/bin/dmagent -N -P19 -VSY
+    class late_start
+    socket dmagent stream 660 root inet
+    user root
+
+#++SSD_RIL
+
+# QMUX must be in multiple groups to support external process connections
+service qmuxd /system/bin/qmuxd
+    class core
+    user radio
+    group radio audio gps
+
+service netmgrd /system/bin/netmgrd
+    class core
+
+#--SSD_RIL
+
+#++SSD_GPS
+service quipc_igsn /system/bin/quipc_igsn
+    class late_start
+    user gps
+    group inet gps
+    disabled
+
+service quipc_main /system/bin/quipc_main
+    class late_start
+    user gps
+    group gps net_admin wifi inet
+    disabled
+#--SSD_GPS
+
+#HDMI
+
+service hdmid /system/bin/hdmid
+    class late_start
+    socket displayd stream 0660 root system graphics
+    disabled
+
+on property:ro.hdmi.enable=true
+    start hdmid
+
+service tpd /sbin/tpd
+    class core
+    cgroup bg
+    user root
+
+
+# for USB internet sharing
+service udhcpd /system/bin/udhcpd
+	disabled
+	oneshot
+
+service netsharing_on /system/bin/netsharing net on
+	disabled
+	oneshot
+
+service netsharing_off /system/bin/netsharing net off
+	disabled
+	oneshot
+
+service netsharing_pass /system/bin/netsharing net_pass on
+	disabled
+	oneshot
+
+
+# bugreport is triggered by the KEY_VOL-UP and KEY_VOL-DOWN keycodes
+service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
+    disabled
+    cgroup bg
+    oneshot
+    keycodes 114 115
+
+service hdf /sbin/hdf
+    class core
+	oneshot
+
+service ril-daemon /system/bin/rild
+    class core
+    socket rild stream 660 root radio
+    socket rild-debug stream 660 radio system
+    user root
+    group radio cache inet misc audio sdcard_rw qcom_oncrpc diag
+
+on property:dev.bootcomplete=1
+    start bootcomplete
+
+service bootcomplete /system/bin/bootcomplete
+    user root
+    group root
+    disabled
+    oneshot
+
+service shutdown /system/bin/shutdown
+    user root
+    group root
+    disabled
+    oneshot
+
+service charging /system/bin/charging
+    user root
+    group root
+    disabled
+    oneshot
+
+service htc_ebdlogd /system/bin/htc_ebdlogd -s -k -P 7
+    user root
+    cgroup bg
+    disabled
+#    oneshot
+    ioprio idle 0
+
+service htc_ebdlogd_rel /system/bin/htc_ebdlogd -s -k
+    user root
+    cgroup bg
+    disabled
+#    oneshot
+    ioprio idle 0
+
+# Discretix DRM change start
+service dx_drm_server /system/bin/DxDrmServerIpc -f -o allow_other /data/DxDrm/fuse
+    class main
+# Discretix DRM change end
+
+# Widevine DRM start
+service qseecomd /system/bin/qseecomd
+    class late_start
+    user system
+    group system
+
+service hcheck /system/bin/hcheck
+    class late_start
+    user system
+    group system
+    oneshot
+# Widevine DRM end
+
+# OMA DRM change start
+#service fusermount /system/bin/fusermount -u /data/htcfs
+#    disabled
+#    oneshot
+
+#service htcfs /system/bin/htcfs /data/htcfs -f -o allow_other
+#    class main
+#    onrestart restart fusermount
+# OMA DRM change end
+
+#on property:ro.build.tags=test-keys
+#    start htc_ebdlogd
+
+#on property:ro.build.tags=release-keys
+#    start htc_ebdlogd_rel
+
+# compass/accelerometer daemon
+service akmd /system/bin/akmd
+    class main
+    user system
+    group system misc input
+    
+on property:service.adb.root=1
+    write /sys/class/android_usb/android0/enable 0
+    restart adbd
+    write /sys/class/android_usb/android0/enable 1
+

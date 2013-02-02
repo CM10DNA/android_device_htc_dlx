@@ -98,4 +98,4 @@ BOARD_HAS_NO_REAL_SDCARD := true
 TW_FLASH_FROM_STORAGE := true
 
 # Added for Clockworkmod
-#BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
+BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"

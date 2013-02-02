@@ -65,8 +65,17 @@ TARGET_PROVIDES_LIBLIGHTS := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
 
 # Wifi
-#WIFI_DRIVER_MODULE_NAME          := 
-#WIFI_DRIVER_MODULE_PATH          := "/system/lib/modules/bcmdhd.ko"
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WLAN_DEVICE := bcmdhd
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_HOSTAPD_DRIVER             := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_bcmdhd
+
+#BOARD_WLAN_DEVICE           := bcm4334
+WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
+WIFI_DRIVER_FW_STA_PATH     := "/system/vendor/firmware/fw_bcm4334.bin"
+WIFI_DRIVER_FW_AP_PATH      := "/system/vendor/firmware/fw_bcm4334_apsta.bin"
 
 BOARD_USES_SECURE_SERVICES := true
 

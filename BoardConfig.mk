@@ -78,7 +78,7 @@ WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
 WIFI_DRIVER_FW_STA_PATH     := "/system/vendor/firmware/fw_bcm4334.bin"
 WIFI_DRIVER_FW_PATH_P2P     := "/system/vendor/firmware/fw_bcm4334_p2p.bin"
 WIFI_DRIVER_FW_AP_PATH      := "/system/vendor/firmware/fw_bcm4334_apsta.bin"
-
+WIFI_DRIVER_MODULE_NAME     := "bcmdhd_wlan"
 BOARD_USES_SECURE_SERVICES := true
 
 

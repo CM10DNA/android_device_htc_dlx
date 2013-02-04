@@ -530,7 +530,7 @@ service sfc /sbin/sfc
     class core  
 	oneshot  
 
-service zygote /system/xbin/strace -tt -o/data/media/boot.strace /system/bin/app_process -Xzygote /system/bin --zygote --start system-server
+service servicemanager /system/bin/servicemanager
     class core
     user system
     group system

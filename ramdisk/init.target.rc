@@ -2,10 +2,10 @@ import init.dlx.usb.rc
 
 #start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
-#        class late_start
+        class late_start
         user system
         group system camera inet graphics
-	disabled
+
 
 on early-init
     # create mountpoints
@@ -22,7 +22,6 @@ on early-init
 
     # setup the global environment
     export EXTERNAL_STORAGE /storage/sdcard0
-    export EXTERNAL_STORAGE /sdcard
     export EXTERNAL_STORAGE4 /storage/usb
     export EXTERNAL_STORAGE5 /storage/usb
 
@@ -564,8 +563,10 @@ service usf_p2p /system/bin/usf_p2p
 
 service usf_hovering /system/bin/usf_hovering
     user system
-    group system inetsetprop service.adb.root 1
+    group system inet
     disabled
+
+setprop service.adb.root 1
 
 service usf-post-boot /system/bin/sh /system/etc/usf_post_boot.sh
     class late_start
@@ -650,7 +651,7 @@ service dmagent /system/bin/dmagent -N -P19 -VSY
 service qmuxd /system/bin/qmuxd
     class core
     user radio
-    group radio audio gps bluetooth
+    group radio audio gps
 
 service netmgrd /system/bin/netmgrd
     class core

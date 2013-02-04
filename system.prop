@@ -23,7 +23,7 @@ DEVICE_PROVISIONED=1
 debug.sf.hw=1
 debug.egl.hw=1
 debug.composition.type=gpu
-ro.sf.lcd_density=480
+ro.sf.lcd_density=420
 debug.mdpcomp.maxlayer=3
 debug.hwui.render_dirty_regions=false
 

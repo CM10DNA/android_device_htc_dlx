@@ -55,6 +55,12 @@ BOARD_PROVIDES_LIBRIL := true
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
 
+# Ril
+BOARD_RIL_CLASS := "../../../device/htc/dlx/ril/"
+
+# Camera
+BOARD_HAVE_HTC_FFC := true
+
 # QCOM GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := dlx
@@ -74,13 +80,12 @@ BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
 BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_bcmdhd
 
 # BOARD_WLAN_DEVICE
+WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
 WIFI_DRIVER_FW_STA_PATH     := "/system/vendor/firmware/fw_bcm4334.bin"
 WIFI_DRIVER_FW_PATH_P2P     := "/system/vendor/firmware/fw_bcm4334_p2p.bin"
 WIFI_DRIVER_FW_AP_PATH      := "/system/vendor/firmware/fw_bcm4334_apsta.bin"
-WIFI_DRIVER_MODULE_NAME     := "BCMDHD_4334"
-BOARD_USES_SECURE_SERVICES := true
-
+WIFI_DRIVER_MODULE_NAME     := "bcmdhd"
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true

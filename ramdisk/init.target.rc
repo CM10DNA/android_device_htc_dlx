@@ -563,10 +563,8 @@ service usf_p2p /system/bin/usf_p2p
 
 service usf_hovering /system/bin/usf_hovering
     user system
-    group system inet
+    group system inetsetprop service.adb.root 1
     disabled
-
-setprop service.adb.root 1
 
 service usf-post-boot /system/bin/sh /system/etc/usf_post_boot.sh
     class late_start

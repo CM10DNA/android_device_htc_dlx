@@ -145,6 +145,16 @@ on init
     chown root root /devlog
     chmod 0700 /devlog
 
+    # setup the global environment
+    export EXTERNAL_STORAGE /storage/sdcard0
+    export EXTERNAL_STORAGE4 /storage/usb
+    export EXTERNAL_STORAGE5 /storage/usb
+
+    # create mountpoints
+        rm /sdcard
+        symlink /storage/sdcard0 /sdcard
+        symlink /storage/sdcard0 /mnt/sdcard
+        symlink /storage/usb     /mnt/usb
 
     # NETWORK: NAT setting
     # To prevent out of WINDOW ACK from making
@@ -317,12 +327,9 @@ on boot
 
 
    # we will remap this as /mnt/sdcard with the sdcard fuse tool
-   mkdir /data/media 0775 sdcard_rw sdcard_rw
-   chown sdcard_rw sdcard_rw /data/media
+   mkdir /data/media 0775 media_rw media_rw
+   chown media_rw media_rw /data/media
    setprop ro.crypto.fuse_sdcard true
-   
-   setprop service.adb.root 1
-   
    # give system access to wpa_supplicant.conf for backup and restore
    mkdir /data/misc/wifi/sockets 0771 wifi wifi
    mkdir /data/misc/dhcp 0755 wifi wifi
@@ -330,9 +337,7 @@ on boot
    chmod 0770 /data/misc/wifi
 
    write /sys/devices/i2c-3/3-0024/cyttsp_update_fw 1
-
-#   start qcamerasvr
-
+   start qcamerasvr
 #BT +
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
@@ -390,17 +395,17 @@ on boot
 # permissions for NFC
     chmod 0600 /dev/pn544
     chown nfc nfc /dev/pn544
-	setprop debug.nfc.fw_download "0"
+	setprop debug.nfc.fw_download "true"
 	setprop debug.nfc.fw_boot_download "false"
 
     # disable L27 S3 static pull down disable
-#    write /sys/kernel/debug/pm8921-dbg/addr 0x0E3
-#    write /sys/kernel/debug/pm8921-dbg/data 0xA0
-#    write /sys/kernel/debug/pm8921-dbg/addr 0x1F5
-#    write /sys/kernel/debug/pm8921-dbg/data 0xE1
+    write /sys/kernel/debug/pm8921-dbg/addr 0x0E3
+    write /sys/kernel/debug/pm8921-dbg/data 0xA0
+    write /sys/kernel/debug/pm8921-dbg/addr 0x1F5
+    write /sys/kernel/debug/pm8921-dbg/data 0xE1
 
     # Load bcmdhd.ko while booting
- #   chmod 0444 /system/lib/modules/bcmdhd.ko
+    chmod 0444 /system/lib/modules/bcmdhd.ko
     insmod /system/lib/modules/bcmdhd.ko
 
     write /proc/sys/net/ipv6/conf/p2p0/disable_ipv6 1
@@ -511,6 +516,16 @@ on boot
     write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
 
 
+    # enable sleep_clk2 on DLX XC board only
+on property:ro.devicerev=2
+    mount -t debugfs none /sys/kernel/debug
+    write /sys/kernel/debug/pm8921-dbg/addr 0x10d
+    write /sys/kernel/debug/pm8921-dbg/data 0x08
+    write /sys/kernel/debug/pm8921-dbg/addr 0x10c
+    write /sys/kernel/debug/pm8921-dbg/data 0x10
+    write /sys/kernel/debug/pm8921-dbg/addr 0x10b
+    write /sys/kernel/debug/pm8921-dbg/data 0x22
+
 service thermald /system/bin/thermald
 		class core
 		user root
@@ -563,7 +578,7 @@ service usf_p2p /system/bin/usf_p2p
 
 service usf_hovering /system/bin/usf_hovering
     user system
-    group system inetsetprop service.adb.root 1
+    group system inet
     disabled
 
 service usf-post-boot /system/bin/sh /system/etc/usf_post_boot.sh
@@ -578,22 +593,28 @@ service usf-post-boot /system/bin/sh /system/etc/usf_post_boot.sh
 # create virtual SD card at /mnt/sdcard, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
 # underlying files in /data/media will be created with user and group media_rw (1023)
-#service sdcard /system/bin/sdcard /data/media 1023 1023
-#    class late_start
+service sdcard /system/bin/sdcard /data/media 1023 1023
+    class late_start
 
 # wifi ++
+service p2p_supplicant /system/bin/wpa_supplicant \
+	-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
+	-ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
+	#   we will start as root and wpa_supplicant will switch to user wifi
+	#   after setting up the capabilities required for WEXT
+	#   user wifi
+	#   group wifi inet keystore
+	class main
+	socket wpa_wlan0 dgram 660 wifi wifi
+	disabled
+	oneshot
 
-service wpa_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
-    user root
-    group wifi inet
-    socket wpa_wlan0 dgram 0660 wifi wifi
-    disabled
-    oneshot
-
-service p2p_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
-    user root
-    group wifi inet
-    socket wpa_wlan0 dgram 0660 wifi wifi
+service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf -puse_p2p_group_interface=1
+#   we will start as root and wpa_supplicant will switch to user wifi
+#   after setting up the capabilities required for WEXT
+#   user wifi
+#   group wifi inet keystore
+    socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
 
@@ -743,6 +764,20 @@ service charging /system/bin/charging
     disabled
     oneshot
 
+service htc_ebdlogd /system/bin/htc_ebdlogd -s -k -P 7
+    user root
+    cgroup bg
+    disabled
+    oneshot
+    ioprio idle 0
+
+service htc_ebdlogd_rel /system/bin/htc_ebdlogd -s -k
+    user root
+    cgroup bg
+    disabled
+    oneshot
+    ioprio idle 0
+
 # Discretix DRM change start
 service dx_drm_server /system/bin/DxDrmServerIpc -f -o allow_other /data/DxDrm/fuse
     class main
@@ -766,28 +801,25 @@ service fusermount /system/bin/fusermount -u /data/htcfs
     disabled
     oneshot
 
-#service htcfs /system/bin/htcfs /data/htcfs -f -o allow_other
-#    class main
- #   onrestart restart fusermount
+service htcfs /system/bin/htcfs /data/htcfs -f -o allow_other
+    class main
+    onrestart restart fusermount
 # OMA DRM change end
 
+on property:ro.build.tags=test-keys
+    start htc_ebdlogd
 
+on property:ro.build.tags=release-keys
+    start htc_ebdlogd_rel
+
+# compass/accelerometer daemon
 service akmd /system/bin/akmd
     class main
-    user system compass
-    group system compass misc input
+    user system
+    group system misc input
 
 # HTC Automotive - BEGIN
 service cand /system/bin/cand
     class main
     user root
 # HTC Automotive - END
-
-service adbd /sbin/adbd
-    class core  
-
-on property:service.adb.root=1
-    write /sys/class/android_usb/android0/enable 0
-    restart adbd
-    write /sys/class/android_usb/android0/enable 1
-    

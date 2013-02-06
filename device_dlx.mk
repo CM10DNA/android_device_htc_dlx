@@ -17,10 +17,13 @@
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# common msm8960 configs
-$(call inherit-product, device/htc/msm8960-common/msm8960.mk)
-
 DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
+
+# Recovery
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/recovery/sbin/choice_fn:recovery/root/sbin/choice_fn \
+    device/htc/dlx/recovery/sbin/detect_key:recovery/root/sbin/detect_key \
+    device/htc/dlx/recovery/sbin/offmode_charging:recovery/root/sbin/offmode_charging \
 
 # Boot ramdisk setup
 PRODUCT_COPY_FILES += \
@@ -28,9 +31,6 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/ramdisk/init.dlx.rc:root/init.dlx.rc \
     device/htc/dlx/ramdisk/init.dlx.usb.rc:root/init.dlx.usb.rc \
     device/htc/dlx/ramdisk/ueventd.dlx.rc:root/ueventd.dlx.rc
-
-PRODUCT_COPY_FILES += \
-    device/htc/dlx/prebuilt/bootanimation.zip:system/media/bootanimation.zip
 
 # NFCEE access control
 ifeq ($(TARGET_BUILD_VARIANT),user)
@@ -66,7 +66,8 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/dsp/soundimage/srs_global.cfg:system/etc/soundimage/srs_global.cfg
 
 PRODUCT_COPY_FILES += \
-    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x:/system/etc/snd_soc_msm/snd_soc_msm_2x 
+    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x:/system/etc/snd_soc_msm/snd_soc_msm_2x \
+    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x_Fusion3:/system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3
 
 # Keylayouts and Keychars
 PRODUCT_COPY_FILES += \
@@ -95,13 +96,59 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/idc/qwerty.idc:system/usr/idc/qwerty.idc \
     device/htc/dlx/idc/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc
 
-# GPS
+# Filesystem management tools
 PRODUCT_PACKAGES += \
-        libloc_adapter \
-        libloc_eng \
-        libloc_api_v02 \
-        libgps.utils \
-        gps.msm8960
+	e2fsck
+
+PRODUCT_PACKAGES += \
+	libgenlock \
+	liboverlay \
+	hwcomposer.msm8960 \
+	gralloc.msm8960 \
+	copybit.msm8960
+
+PRODUCT_PACKAGES += \
+	alsa.msm8960 \
+	audio_policy.msm8960 \
+	audio.primary.msm8960 \
+	audio.a2dp.default \
+	audio.usb.default \
+	audio.r_submix.default \
+	libaudio-resampler
+
+PRODUCT_PACKAGES += \
+	hci_qcomm_init
+
+PRODUCT_PACKAGES += \
+	power.msm8960
+
+PRODUCT_COPY_FILES += \
+	device/htc/dlx/init.dlx.bt.sh:system/etc/init.dlx.bt.sh
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.qualcomm.bt.hci_transport=smd
+
+PRODUCT_PACKAGES += \
+	camera.msm8960 \
+	libmmcamera_interface2 \
+	libmmcamera_interface
+
+PRODUCT_PACKAGES += \
+	mm-vdec-omx-test \
+	mm-venc-omx-test720p \
+	libdivxdrmdecrypt \
+	libOmxVdec \
+	libOmxVenc \
+	libOmxCore \
+	libstagefrighthw \
+	libc2dcolorconvert
+
+PRODUCT_PACKAGES += \
+	libloc_adapter \
+	libloc_eng \
+	libloc_api_v02 \
+	libgps.utils \
+	gps.msm8960
 
 # NFC
 PRODUCT_PACKAGES += \

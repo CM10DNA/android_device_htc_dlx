@@ -1,3 +1,12 @@
+lib/libOpenCL.so
+lib/libOpenVG.so
+lib/libclrenderer.so
+lib/libxml.so
+#lib/libmmstillomx.so
+#lib/libOmxVenc.so
+#lib/libOmxVdec.so
+
+
 #Configuration files
 etc/agps_rm
 
@@ -13,21 +22,20 @@ bin/ds_fmc_appd
 bin/efsks
 bin/hci_qcomm_init
 bin/hcheck
-bin/hdmid
+#bin/hdmid
 bin/ks
 bin/mm-qcamera-daemon
 bin/mpdecision
 #bin/mm-pp-daemon
 bin/netmgrd
-#bin/nl_listener
-#bin/netsharing
+bin/nl_listener
+bin/netsharing
 bin/pnpmgr
 bin/qcks
 bin/qmiproxy
 bin/qmuxd
 bin/qseecomd
 bin/radish
-#bin/sensorservice
 #bin/shutdown
 bin/thermald
 bin/usbhub
@@ -38,8 +46,6 @@ bin/v4l2-qcamera-app
 # Audio
 lib/libacdbloader.so
 lib/libaudcal.so
-#lib/libcsd-client.so
-#lib/libbeatscorehtc.so
 
 # Graphics
 lib/libmode10GLES20.so
@@ -65,8 +71,9 @@ lib/libgsl.so
 lib/libloc_api_v02.so
 
 
-# Camera
+# Camera  *CONFIRMED*
 lib/libcameraface.so
+lib/libBeautyChat.so
 lib/libcam_oem_plugin.so
 lib/liboemcamera.so
 lib/libOlaEngineNew.so
@@ -74,9 +81,16 @@ lib/libposteffect.so
 lib/libgemini.so
 lib/libmmipl.so
 lib/libmmjpeg.so
+lib/libmmosal.so
+lib/libmmparser.so
+lib/libmmparser_divxdrmlib.so
+lib/libmmparser_lite.so
 lib/libmmcamera_frameproc.so
 lib/libmmcamera_rawchipproc.so
 lib/libmmcamera_statsproc31.so
+lib/libmmcamera_wavelet_lib.so
+lib/libmmcamera_hdr_lib.so
+lib/libmmcamera_image_stab.so
 
 lib/libchromatix_ar0260_default_video.so
 lib/libchromatix_imx175_hdr.so
@@ -135,18 +149,15 @@ lib/libchromatix_s5k3h2yx_hdr.so
 # Media
 lib/libmm-color-convertor.so
 lib/libI420colorconvert.so
-#lib/libstagefright_soft_aacdec.so
-#lib/libstagefright_soft_aacenc.so
+lib/libgnmc_aactag.2.5.9.4.so
+lib/libstagefright_soft_aacdec.so
+lib/libstagefright_soft_aacenc.so
 lib/libimage-jpeg-dec-omx-comp.so
 lib/libimage-jpeg-enc-omx-comp.so
 lib/libimage-omx-common.so
 lib/libmmmpo.so
 lib/libmmmpod.so
-#lib/libOmxVenc.so
-#lib/libOmxVdec.so
-lib/libmmosal.so
-lib/libmmparser_divxdrmlib.so
-lib/libmmparser_lite.so
+
 
 
 
@@ -169,13 +180,13 @@ lib/libqmi_common_so.so
 lib/libqmi_csi.so
 lib/libqmi_encdec.so
 lib/libqmiservices.so
+lib/libqmi_client_qmux.so
 lib/libQSEEComAPI.so
 
 # Radio
 lib/libhtc_rilhook.so
 lib/libnetmgr.so
 lib/libqc-opt.so
-lib/libril.so
 lib/libril-qc-qmi-1.so
 lib/libril-qcril-hook-oem.so
 
@@ -190,31 +201,14 @@ lib/libmpl_jni.so
 
 
 
-lib/libllvm-a3xx.so
-lib/libmllite.so
-lib/libmlplatform.so
-#lib/libmmcamera_faceproc.so
-#lib/libmmcamera_hdr_lib.so
-#lib/libmmcamera_image_stab.so
-#lib/libmmcamera_wavelet_lib.so
+#lib/libllvm-a3xx.so
 
 
-#lib/libmmjps.so
-#lib/libmmstillomx.so
-#lib/libgnmc_aactag.2.5.9.4.so
-#lib/libxml.so
-#lib/libOpenCL.so
-#lib/libOpenVG.so
-#lib/sensorservice.so
-
-lib/libsrsprocessing.so
-lib/libext3-fileio.so
+#lib/libsrsprocessing.so
+#lib/libext3-fileio.so
 #lib/libfrsdk.so
 #lib/libfuse.so
 #lib/libgcomm_jni.so
-
-
-
 
 
 # Q6 firmware
@@ -290,14 +284,11 @@ etc/firmware/tzapps.mdt
 
 vendor/firmware/libpn544_fw.so
 vendor/firmware/mfg.bin
-lib/libwvm.so
-lib/libwvdrm_L1.so
-lib/libWVStreamControlAPI_L1.so
-lib/libdrmwvmplugin.so
+vendor/lib/libwvm.so
+vendor/lib/libwvdrm_L1.so
+vendor/lib/libWVStreamControlAPI_L1.so
+vendor/lib/drm/libdrmwvmplugin.so
 
 
-# Additional libs
 
-
-# Misc
 

@@ -89,6 +89,7 @@ TARGET_PROVIDES_LIBLIGHTS := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
 
 # Wifi
+BOARD_HAS_QCOM_WLAN := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WLAN_DEVICE := bcmdhd
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
@@ -98,10 +99,10 @@ BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_bcmdhd
 BOARD_LEGACY_NL80211_STA_EVENTS := false
 
 # BOARD_WLAN_DEVICE
-WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_STA_PATH     := "/system/etc/firmware/fw_bcm4334.bin"
 WIFI_DRIVER_FW_PATH_P2P     := "/system/etc/firmware/fw_bcm4334_p2p.bin"
 WIFI_DRIVER_FW_AP_PATH      := "/system/etc/firmware/fw_bcm4334_apsta.bin"
+WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
 WIFI_DRIVER_MODULE_NAME     := bcmdhd
 
 # Filesystem

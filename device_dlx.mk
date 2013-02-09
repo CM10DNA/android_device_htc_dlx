@@ -29,8 +29,11 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/ramdisk/init.dlx.usb.rc:root/init.dlx.usb.rc \
     device/htc/dlx/ramdisk/ueventd.dlx.rc:root/ueventd.dlx.rc
 
+# Custom Recovery and Charging
 PRODUCT_COPY_FILES += \
-    device/htc/dlx/prebuilt/bootanimation.zip:system/media/bootanimation.zip
+    device/htc/dlx/recovery/sbin/choice_fn:recovery/root/sbin/choice_fn \
+    device/htc/dlx/recovery/sbin/detect_key:recovery/root/sbin/detect_key \
+    device/htc/dlx/recovery/sbin/offmode_charging:recovery/root/sbin/offmode_charging
 
 # NFCEE access control
 ifeq ($(TARGET_BUILD_VARIANT),user)

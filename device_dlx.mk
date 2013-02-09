@@ -5,7 +5,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http:/www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,24 +17,20 @@
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# Common msm8960 configs
+# common msm8960 configs
 $(call inherit-product, device/htc/msm8960-common/msm8960.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
 
-# Recovery & custom charging
-PRODUCT_COPY_FILES += \
-    device/htc/dlx/recovery/sbin/choice_fn:recovery/root/sbin/choice_fn \
-    device/htc/dlx/recovery/sbin/detect_key:recovery/root/sbin/detect_key \
-    device/htc/dlx/recovery/sbin/offmode_charging:recovery/root/sbin/offmode_charging \
-
 # Boot ramdisk setup
 PRODUCT_COPY_FILES += \
     device/htc/dlx/ramdisk/fstab.dlx:root/fstab.dlx \
-    device/htc/dlx/ramdisk/init.rc:root/init.rc \
     device/htc/dlx/ramdisk/init.dlx.rc:root/init.dlx.rc \
     device/htc/dlx/ramdisk/init.dlx.usb.rc:root/init.dlx.usb.rc \
     device/htc/dlx/ramdisk/ueventd.dlx.rc:root/ueventd.dlx.rc
+
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/prebuilt/bootanimation.zip:system/media/bootanimation.zip
 
 # NFCEE access control
 ifeq ($(TARGET_BUILD_VARIANT),user)
@@ -49,15 +45,15 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += device/htc/dlx/configs/AudioBTID.csv:system/etc/AudioBTID.csv
 
 # QC thermald config
-PRODUCT_COPY_FILES += device/htc/dlx/configs/thermald.conf:system/etc/thermald.conf
+PRODUCT_COPY_FILES += device/htc/msm8960-common/configs/thermald.conf:system/etc/thermald.conf
 
-# Vold config
+# vold config
 PRODUCT_COPY_FILES += \
     device/htc/dlx/configs/vold.fstab:system/etc/vold.fstab
 
 # wifi config
 PRODUCT_COPY_FILES += \
-    device/htc/dlx/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+    device/htc/dlx/configs/wpa_supplicant.conf:/system/etc/wifi/wpa_supplicant.conf
 
 # Sound configs
 PRODUCT_COPY_FILES += \
@@ -70,9 +66,7 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/dsp/soundimage/srs_global.cfg:system/etc/soundimage/srs_global.cfg
 
 PRODUCT_COPY_FILES += \
-    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x:system/etc/snd_soc_msm/snd_soc_msm_2x \
-    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x_Fusion3:system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3 \
-    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x_Fusion3_DMIC:system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3_DMIC
+    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x:/system/etc/snd_soc_msm/snd_soc_msm_2x 
 
 # Keylayouts and Keychars
 PRODUCT_COPY_FILES += \
@@ -82,6 +76,7 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/keylayout/projector-Keypad.kl:system/usr/keylayout/projector-Keypad.kl \
     device/htc/dlx/keylayout/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl \
     device/htc/dlx/keylayout/keypad_8960.kl:system/usr/keylayout/keypad_8960.kl \
+    device/htc/dlx/keylayout/msm8960-snd-card_Button_Jack.kl:system/usr/keylayout/msm8960-snd-card_Button_Jack.kl \
     device/htc/dlx/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl \
     device/htc/dlx/keylayout/synaptics-rmi-touchscreen.kl:system/usr/keylayout/synaptics-rmi-touchscreen.kl \
     device/htc/dlx/keylayout/Vendor_045e_Product_028e.kl:system/usr/keylayout/Vendor_045e_Product_028e.kl \
@@ -100,33 +95,16 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/idc/qwerty.idc:system/usr/idc/qwerty.idc \
     device/htc/dlx/idc/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc
 
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-    e2fsck
-
 PRODUCT_COPY_FILES += \
     device/htc/dlx/init.dlx.bt.sh:system/etc/init.dlx.bt.sh
-
-PRODUCT_PACKAGES += \
-    hci_qcomm_init
-
-# Camera
-PRODUCT_PACKAGES += \
-    libmmcamera_interface2 \
-    libmmcamera_interface
-
-# OMX
-PRODUCT_PACKAGES += \
-    mm-vdec-omx-test \
-    mm-venc-omx-test720p \
-
+	
 # GPS
 PRODUCT_PACKAGES += \
-    libloc_adapter \
-    libloc_eng \
-    libloc_api_v02 \
-    libgps.utils \
-    gps.msm8960
+        libloc_adapter \
+        libloc_eng \
+        libloc_api_v02 \
+        libgps.utils \
+        gps.msm8960
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -143,10 +121,10 @@ PRODUCT_PACKAGES += \
 
 # Permissions
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
-    frameworks/base/nfc-extras/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
-    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
-    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
+        frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+        frameworks/base/nfc-extras/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
+        frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
+        frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
 # Extra properties
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -158,16 +136,25 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # We have enough space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
+PRODUCT_CHARACTERISTICS := nosdcard
+
 # Set build date
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 # Device uses high-density artwork where available
-PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
-PRODUCT_AAPT_PREF_CONFIG := xhdpi
-PRODUCT_LOCALES += en_US xhdpi
+PRODUCT_AAPT_CONFIG := normal hdpi xhdpi xxhdpi
+PRODUCT_AAPT_PREF_CONFIG := xhdpi xxhdpi
+PRODUCT_LOCALES += en_US xhdpi xxhdpi
 
 # call the proprietary setup
 $(call inherit-product-if-exists, vendor/htc/dlx/dlx-vendor.mk)
 
 # call dalvik heap config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
+
+# Discard inherited values and use our own instead.
+PRODUCT_DEVICE := dlx
+PRODUCT_NAME := cm_dlx
+PRODUCT_BRAND := htc
+PRODUCT_MODEL := DNA
+PRODUCT_MANUFACTURER := HTC

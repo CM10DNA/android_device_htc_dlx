@@ -24,18 +24,13 @@
 # variant, so that it gets overwritten by the parent (which goes
 # against the traditional rules of inheritance).
 
+#USE_CAMERA_STUB := true
+
 # inherit from common msm8960
 -include device/htc/msm8960-common/BoardConfigCommon.mk
 
-# CAMERA
-USE_CAMERA_STUB := false
-BOARD_HAVE_HTC_FFC := true
-BOARD_USES_CAMERA_FAST_AUTOFOCUS := true
-COMMON_GLOBAL_CFLAGS += -DJB_CAMERA_BLOB -DDISABLE_HW_ID_MATCH_CHECK -DHTCLOG 
-COMMON_GLOBAL_CPPFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
-
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := dlx 
+TARGET_BOOTLOADER_BOARD_NAME := dlx
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 
@@ -49,30 +44,26 @@ TARGET_KERNEL_CONFIG := dlx_defconfig
 TARGET_KERNEL_SOURCE := kernel/htc/dlx-$(TARGET_KERNEL_VERSION)
 TARGET_PREBUILT_KERNEL := device/htc/dlx/prebuilt/kernel
 
-# Boot animation
-TARGET_SCREEN_HEIGHT := 1920
-TARGET_SCREEN_WIDTH := 1080
-
 # Audio
+BOARD_USES_ALSA_AUDIO:= true
 BOARD_HAVE_HTC_AUDIO := true
-BOARD_USES_FLUENCE_INCALL := true
-BOARD_USES_SEPERATED_AUDIO_INPUT := true
 
-# Bluetooth
-BOARD_HAVE_BLUETOOTH_QCOM := true
-BLUETOOTH_HCI_USE_MCT := true
+# Use libril in the device tree
+BOARD_PROVIDES_LIBRIL := true
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
+
+# Ril
+BOARD_RIL_CLASS := "../../../device/htc/dlx/ril/"
+
+# Camera
+BOARD_HAVE_HTC_FFC := true
 
 # QCOM GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
-BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
-
-# RIL
-#BOARD_PROVIDES_LIBRIL := true
-BOARD_USES_LEGACY_RIL := true
+BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := dlx
 
 # Lights
 TARGET_PROVIDES_LIBLIGHTS := true
@@ -91,10 +82,10 @@ BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_bcmdhd
 # BOARD_WLAN_DEVICE
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
-WIFI_DRIVER_FW_STA_PATH     := "/system/etc/firmware/fw_bcm4334.bin"
-WIFI_DRIVER_FW_PATH_P2P     := "/system/etc/firmware/fw_bcm4334_p2p.bin"
-WIFI_DRIVER_FW_AP_PATH      := "/system/etc/firmware/fw_bcm4334_apsta.bin"
-WIFI_DRIVER_MODULE_NAME     := bcmdhd
+WIFI_DRIVER_FW_STA_PATH     := "/system/vendor/firmware/fw_bcm4334.bin"
+WIFI_DRIVER_FW_PATH_P2P     := "/system/vendor/firmware/fw_bcm4334_p2p.bin"
+WIFI_DRIVER_FW_AP_PATH      := "/system/vendor/firmware/fw_bcm4334_apsta.bin"
+WIFI_DRIVER_MODULE_NAME     := "bcmdhd"
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -102,11 +93,14 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1946156032
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 12482248704
-BOARD_FLASH_BLOCK_SIZE := 4096 
+BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_VOLD_MAX_PARTITIONS := 36
-BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
+
+#TWRP
+DEVICE_RESOLUTION := 800x1280
+RECOVERY_SDCARD_ON_DATA := true
+BOARD_HAS_NO_REAL_SDCARD := true
+TW_FLASH_FROM_STORAGE := true
 
 # Added for Clockworkmod
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
-BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_INITRC := device/htc/dlx/recovery/init.rc

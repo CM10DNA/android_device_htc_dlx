@@ -650,12 +650,3 @@ on property:service.adb.root=1
     restart adbd
     write /sys/class/android_usb/android0/enable 1
 
-
-service hciattach /system/bin/brcm_patchram_plus --no2bytes --enable_hci \
-    --tosleep 50000 --baudrate 3000000 --use_baudrate_for_download \
-    --patchram /system/etc/firmware/BCM4334B0_002.001.013.0488.0604_DLX_WL.hcd /dev/ttyHS0
-    class main
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-    oneshot

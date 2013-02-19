@@ -2,8 +2,7 @@
 # system.prop for dlx
 #
 mobiledata.interfaces=rmnet0,rmnet1
-ro.telephony.default_network=8
-ro.telephony.ril_class=HTC8960RIL
+ro.telephony.default_network=9
 telephony.lteOnCdmaDevice=1
 rild.libpath=/system/lib/libril-qc-qmi-1.so
 rild.libargs=-d /dev/smd0

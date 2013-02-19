@@ -13,12 +13,12 @@
 /dev/kgsl-2d1             0666   root       root
 
 # these should not be world writable
-/dev/ttyHS0               0600   bluetooth  bluetooth
+/dev/ttyHS0               0660   bluetooth  bluetooth
 /dev/ttyGS0               0660   system     system
 /dev/sdio_tty_ciq_00      0660   system     system
 /dev/pmem_audio           0660   system     audio
 /dev/pmem_smipool*        0660   system     camera
-/dev/oncrpc/*             0660   root       qcom_oncrpc
+/dev/oncrpc/*             0660   radio      system
 /dev/gss                  0660   gps        gps
 /dev/msm_camera/*         0660   system     camera
 /dev/radio0               0644   fm_radio   fm_radio

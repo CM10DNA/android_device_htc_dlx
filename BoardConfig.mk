@@ -62,15 +62,15 @@ BOARD_HAVE_BLUETOOTH_QCOM := true
 BLUETOOTH_HCI_USE_MCT := true
 
 # Use libril in the device tree
-BOARD_PROVIDES_LIBRIL := true
+# BOARD_PROVIDES_LIBRIL := true
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
 
 # Ril
-BOARD_USES_LEGACY_RIL := true
-BOARD_RIL_CLASS := "../../../device/htc/dlx/ril/"
+# BOARD_USES_LEGACY_RIL := true
+# BOARD_RIL_CLASS := "../../../device/htc/dlx/ril/"
 
 # Camera
 BOARD_HAVE_HTC_FFC := true

@@ -44,7 +44,7 @@ BOARD_KERNEL_PAGE_SIZE := 2048
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=dlx user_debug=31  
 BOARD_FORCE_RAMDISK_ADDRESS := 0x81a08000
 TARGET_KERNEL_VERSION := 3.4
-TARGET_KERNEL_CONFIG := dlx_defconfig
+TARGET_KERNEL_CONFIG := apq8064_defconfig
 TARGET_KERNEL_SOURCE := kernel/htc/dlx-$(TARGET_KERNEL_VERSION)
 TARGET_PREBUILT_KERNEL := device/htc/dlx/prebuilt/kernel
 

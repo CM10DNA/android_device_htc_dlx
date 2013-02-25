@@ -25,9 +25,11 @@ DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
 # Boot ramdisk setup
 PRODUCT_COPY_FILES += \
     device/htc/dlx/ramdisk/fstab.dlx:root/fstab.dlx \
-    device/htc/dlx/ramdisk/init.dlx.rc:root/init.dlx.rc \
-    device/htc/dlx/ramdisk/init.dlx.usb.rc:root/init.dlx.usb.rc \
-    device/htc/dlx/ramdisk/ueventd.dlx.rc:root/ueventd.dlx.rc
+    device/htc/dlx/ramdisk/init.target.rc:root/init.target.rc \
+    device/htc/dlx/ramdisk/init.usb.rc:root/init.usb.rc \
+    device/htc/dlx/ramdisk/ueventd.rc:root/ueventd.rc \
+    device/htc/dlx/ramdisk/init.qcom.firmware_links.sh:root/init.qcom.firmware_links.sh \
+    device/htc/dlx/ramdisk/init.sensors.rc:root/init.sensors.rc
 
 # Custom Recovery and Charging
 PRODUCT_COPY_FILES += \

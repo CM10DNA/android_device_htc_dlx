@@ -138,7 +138,7 @@ on boot
     write /proc/sys/net/ipv6/conf/rmnet5/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet6/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet7/accept_ra 2
-    write /proc/sys/net/ipv6/conf/rmnet_sdio0/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio0/accept_ra 2libqcci_legacy.so
     write /proc/sys/net/ipv6/conf/rmnet_sdio1/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio2/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio3/accept_ra 2

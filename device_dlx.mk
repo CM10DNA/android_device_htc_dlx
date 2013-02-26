@@ -156,10 +156,3 @@ $(call inherit-product-if-exists, vendor/htc/dlx/dlx-vendor.mk)
 
 # call dalvik heap config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
-
-# Discard inherited values and use our own instead.
-PRODUCT_DEVICE := dlx
-PRODUCT_NAME := cm_dlx
-PRODUCT_BRAND := htc
-PRODUCT_MODEL := DNA
-PRODUCT_MANUFACTURER := HTC

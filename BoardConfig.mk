@@ -55,7 +55,7 @@ BLUETOOTH_HCI_USE_MCT := true
 
 # Use libril in the device tree
 BOARD_PROVIDES_LIBRIL := true
-BOARD_RIL_CLASS := "../../../device/htc/dlx/ril/"
+BOARD_PROVIDES_RIL := true
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920

@@ -37,13 +37,13 @@ import java.util.ArrayList;
  *
  * {@hide}
  */
-public class HTCQualcommRIL extends QualcommSharedRIL implements CommandsInterface {
+public class HTCdlxQualcommRIL extends QualcommSharedRIL implements CommandsInterface {
     private final int RIL_INT_RADIO_OFF = 0;
     private final int RIL_INT_RADIO_UNAVAILABLE = 1;
     private final int RIL_INT_RADIO_ON_DLX = 10;
     private final int RIL_INT_RADIO_ON = 13;
 
-    public HTCQualcommRIL(Context context, int networkMode, int cdmaSubscription) {
+    public HTCdlxQualcommRIL(Context context, int networkMode, int cdmaSubscription) {
         super(context, networkMode, cdmaSubscription);
     }
 

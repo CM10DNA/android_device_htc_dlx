@@ -23,7 +23,7 @@
 /dev/msm_hw3dc            0666   root       root
 
 # the genlock client device node is world writable/readable.
-/dev/genlock              0666   root      root
+/dev/genlock              0666   root       root
 
 # gpu driver for adreno200 is globally accessible
 /dev/kgsl                 0666   root       root
@@ -54,13 +54,13 @@
 /dev/pmem_smipool*        0660   system     camera
 /dev/pmem_adsp*           0660   system     audio
 /dev/pmem_camera*         0660   system     camera
-/dev/oncrpc/*             0660   root       qcom_oncrpc
+/dev/oncrpc/*             0660   radio      system
 /dev/gss                  0660   gps        gps
 /dev/adsp/*               0660   system     audio
 /dev/snd/*                0660   system     audio
 /dev/gss                  0660   system     system
 /dev/mt9t013              0660   system     system
-/dev/msm_camera/*         0660   system     system
+/dev/msm_camera/*         0660   system     camera
 /dev/akm8976_daemon       0640   compass    system
 /dev/akm8976_aot          0640   compass    system
 /dev/akm8973_daemon       0640   compass    system
@@ -104,7 +104,7 @@
 /dev/smd3                 0660   bluetooth      bluetooth
 /dev/smd2                 0660   bluetooth      bluetooth
 # for port bridge
-/dev/smd0                 0660   radio      radio
+/dev/smd0                 0660   system     system
 /dev/smd7                 0640   radio      radio
 /dev/smdcntl0             0640   radio      radio
 /dev/smdcntl1             0640   radio      radio

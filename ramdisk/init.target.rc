@@ -307,20 +307,20 @@ service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
 	user root
 	disabled
 
-service adaptive /system/bin/adaptive -c 0 -s 150 -b 210
-    class core
-    user root
-    disabled
+#service adaptive /system/bin/adaptive -c 0 -s 150 -b 210
+#    class core
+#    user root
+#    disabled
 
 service kickstart /system/bin/qcks -1 modem_st1 -2 modem_st2 -3 radio_config -4 cdma_record -i /vendor/firmware/
 	class core
 	user root
 	oneshot
 
-service memlock /system/bin/memlock
-    class main
-    cgroup bg
-    user root
+#service memlock /system/bin/memlock
+#    class main
+#    cgroup bg
+#    user root
 
 service usf_tester /system/bin/usf_tester
     user system
@@ -426,9 +426,9 @@ service dmagent /system/bin/dmagent -N -P19 -VSY
 
 # QMUX must be in multiple groups to support external process connections
 service qmuxd /system/bin/qmuxd
-    class core
+    	class core
    	user radio
-    group radio audio gps
+    	group radio audio gps
 
 service netmgrd /system/bin/netmgrd
     class core
@@ -559,15 +559,7 @@ service cand /system/bin/cand
 
 service adbd /sbin/adbd
     	class core  
-    
-#service dlx_sdcard_mount /system/bin/sh /dlx_sdcard_mount.sh
-#    class main
-#    user root
-#    group root
-#    oneshot
-#    disabled
-    
-  
+        
 service qcamerasvr /system/bin/mm-qcamera-daemon
         class late_start
         user system
@@ -588,3 +580,4 @@ on property:service.adb.root=1
     write /sys/class/android_usb/android0/enable 0
     restart adbd
     write /sys/class/android_usb/android0/enable 1
+    

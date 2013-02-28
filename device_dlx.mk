@@ -25,12 +25,24 @@ DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
 # Boot ramdisk setup
 PRODUCT_COPY_FILES += \
     device/htc/dlx/ramdisk/fstab.dlx:root/fstab.dlx \
-    device/htc/dlx/ramdisk/init.dlx.rc:root/init.dlx.rc \
-    device/htc/dlx/ramdisk/init.dlx.usb.rc:root/init.dlx.usb.rc \
-    device/htc/dlx/ramdisk/ueventd.dlx.rc:root/ueventd.dlx.rc
+    device/htc/dlx/ramdisk/init:root/init \
+    device/htc/dlx/ramdisk/init.rc:root/init.rc \
+    device/htc/dlx/ramdisk/init.target.rc:root/init.target.rc \
+    device/htc/dlx/ramdisk/init.usb.rc:root/init.usb.rc \
+    device/htc/dlx/ramdisk/ueventd.rc:root/ueventd.rc \
+    device/htc/dlx/ramdisk/init.qcom.firmware_links.sh:root/init.qcom.firmware_links.sh \
+    device/htc/dlx/ramdisk/init.qcom.rc:root/init.qcom.rc \
+    device/htc/dlx/ramdisk/init.qcom.sh:root/init.qcom.sh \
+    device/htc/dlx/ramdisk/init.sensors.rc:root/init.sensors.rc
 
+# Custom Recovery and Charging
 PRODUCT_COPY_FILES += \
-    device/htc/dlx/prebuilt/bootanimation.zip:system/media/bootanimation.zip
+    device/htc/dlx/recovery/sbin/choice_fn:recovery/root/sbin/choice_fn \
+    device/htc/dlx/recovery/sbin/detect_key:recovery/root/sbin/detect_key \
+    device/htc/dlx/recovery/sbin/offmode_charging:recovery/root/sbin/offmode_charging
+
+# Get the sample verizon list of APNs
+PRODUCT_COPY_FILES += device/sample/etc/apns-conf_verizon.xml:system/etc/apns-conf.xml
 
 # NFCEE access control
 ifeq ($(TARGET_BUILD_VARIANT),user)
@@ -95,6 +107,12 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/idc/qwerty.idc:system/usr/idc/qwerty.idc \
     device/htc/dlx/idc/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc
 
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/init.dlx.bt.sh:system/etc/init.dlx.bt.sh
+
+PRODUCT_PACKAGES += \
+	dlxril
+	
 # GPS
 PRODUCT_PACKAGES += \
         libloc_adapter \
@@ -128,7 +146,22 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.setupwizard.enable_bypass=1 \
     dalvik.vm.lockprof.threshold=500 \
     ro.com.google.locationfeatures=1 \
-    dalvik.vm.dexopt-flags=m=y
+    dalvik.vm.dexopt-flags=m=y \
+    ro.com.google.clientidbase=android-htc \
+    ro.com.google.clientidbase.yt=android-verizon \
+    ro.com.google.clientidbase.am=android-verizon \
+    ro.com.google.clientidbase.gmm=android-htc \
+    ro.com.google.clientidbase.ms=android-verizon \
+    gsm.sim.operator.alpha = Verizon \
+    gsm.sim.operator.numeric = 310012 \
+    gsm.sim.operator.iso-country = us \
+    gsm.operator.alpha = Verizon \
+    gsm.operator.numeric = 310012 \
+    gsm.operator.iso-country = us \
+    ro.cdma.home.operator.alpha = Verizon \
+    ro.cdma.home.operator.numeric = 310012 \
+    ro.cdma.data_retry_config=max_retries=infinite,0,0,60000,120000,480000,900000 \
+    ro.ril.set.mtusize=1428
 
 # We have enough space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
@@ -148,10 +181,3 @@ $(call inherit-product-if-exists, vendor/htc/dlx/dlx-vendor.mk)
 
 # call dalvik heap config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
-
-# Discard inherited values and use our own instead.
-PRODUCT_DEVICE := dlx
-PRODUCT_NAME := cm_dlx
-PRODUCT_BRAND := htc
-PRODUCT_MODEL := DNA
-PRODUCT_MANUFACTURER := HTC

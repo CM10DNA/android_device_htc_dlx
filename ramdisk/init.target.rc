@@ -26,9 +26,6 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #
-
-import init.dlx.usb.rc
-
 #start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
         class late_start

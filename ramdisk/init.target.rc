@@ -26,11 +26,15 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #
+
+import init.dlx.usb.rc
+
 #start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
         class late_start
         user system
         group system camera inet graphics
+
 
 #start GNSS/Sensor interface daemon
 #service gsiff_daemon /system/bin/gsiff_daemon

@@ -160,6 +160,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.cdma.data_retry_config=max_retries=infinite,0,0,60000,120000,480000,900000 \
     ro.ril.set.mtusize=1428
 
+# Do not power down SIM card when modem is sent to Low Power Mode.
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.radio.apm_sim_not_pwdn=1
+
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
 

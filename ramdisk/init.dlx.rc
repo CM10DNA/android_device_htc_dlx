@@ -351,7 +351,7 @@ service startup /system/bin/sh /init.qcom.sh
 # create virtual SD card at /mnt/sdcard, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
 # underlying files in /data/media will be created with user and group media_rw (1023)
-service sdcard /system/bin/sdcard /data/media 1023 1023
+service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
     	class late_start
 
 service wpa_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
@@ -548,9 +548,6 @@ service akmd /system/bin/akmd
 service cand /system/bin/cand
     	class main
     	user root
-
-service adbd /sbin/adbd
-    	class core  
     
 #service dlx_sdcard_mount /system/bin/sh /dlx_sdcard_mount.sh
 #    class main
@@ -574,10 +571,4 @@ on property:ro.qualcomm.cabl=0
 on property:ro.baseband="msm"
     start port-bridge
     # Enable BT-DUN only for all msms
-    setprop ro.qualcomm.bluetooth.dun true
-
-on property:service.adb.root=1
-    write /sys/class/android_usb/android0/enable 0
-    restart adbd
-    write /sys/class/android_usb/android0/enable 1
-    
+    setprop ro.qualcomm.bluetooth.dun true    

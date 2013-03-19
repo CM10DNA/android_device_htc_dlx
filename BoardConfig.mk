@@ -50,8 +50,7 @@ TARGET_PREBUILT_KERNEL := device/htc/dlx/prebuilt/kernel
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_QCOM := true
-BLUETOOTH_HCI_USE_MCT := true
+BOARD_HAVE_BLUETOOTH_BCM := true
 
 # Use libril in the device tree
 BOARD_PROVIDES_LIBRIL := true
@@ -70,20 +69,25 @@ TARGET_PROVIDES_LIBLIGHTS := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
 
 # Wifi
+WIFI_BAND := 802_11_ABG
 WPA_SUPPLICANT_VERSION := VER_0_8_X
-BOARD_WLAN_DEVICE := bcmdhd
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-BOARD_HOSTAPD_DRIVER             := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
+BOARD_HOSTAPD_DRIVER := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-BOARD_LEGACY_NL80211_STA_EVENTS := false
+BOARD_WLAN_DEVICE := bcmdhd
 
-# BOARD_WLAN_DEVICE
-WIFI_DRIVER_FW_STA_PATH     := "/system/etc/firmware/fw_bcm4334.bin"
-WIFI_DRIVER_FW_PATH_P2P     := "/system/etc/firmware/fw_bcm4334_p2p.bin"
-WIFI_DRIVER_FW_AP_PATH      := "/system/etc/firmware/fw_bcm4334_apsta.bin"
-WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
-WIFI_DRIVER_MODULE_NAME     := bcmdhd
+WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/bcmdhd.ko"
+WIFI_DRIVER_MODULE_NAME := "bcmdhd"
+WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/etc/firmware/fw_bcm4334.bin nvram_path=/system/etc/calibration"
+WIFI_DRIVER_MODULE_AP_ARG := "firmware_path=/system/etc/firmware/fw_bcm4334_apsta.bin nvram_path=/system/etc/calibration"
+WIFI_DRIVER_FW_PATH_STA := "/system/etc/firmware/fw_bcm4334.bin"
+WIFI_DRIVER_FW_PATH_AP := "/system/etc/firmware/fw_bcm4334_apsta.bin"
+WIFI_DRIVER_FW_PATH_P2P := "/system/etc/firmware/fw_bcm4334_p2p.bin"
+
+# GPS
+BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
+TARGET_NO_RPC := true
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true

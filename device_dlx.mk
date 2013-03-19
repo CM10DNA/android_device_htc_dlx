@@ -24,7 +24,6 @@ DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
-    device/htc/dlx/ramdisk/default.prop:root/default.prop \
     device/htc/dlx/ramdisk/fstab.dlx:root/fstab.dlx \
     device/htc/dlx/ramdisk/init.rc:root/init.rc \
     device/htc/dlx/ramdisk/init.dlx.rc:root/init.dlx.rc \
@@ -160,6 +159,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.cdma.home.operator.numeric = 310012 \
     ro.cdma.data_retry_config=max_retries=infinite,0,0,60000,120000,480000,900000 \
     ro.ril.set.mtusize=1428
+
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    persist.sys.usb.config=mtp
 
 # We have enough space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise

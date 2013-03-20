@@ -22,6 +22,10 @@ $(call inherit-product, device/htc/msm8960-common/msm8960.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
 
+# Boot animation
+PRODUCT_COPY_FILES += \
+    vendor/cm/prebuilt/common/bootanimation/1080.zip:system/media/bootanimation.zip
+
 # Ramdisk
 PRODUCT_COPY_FILES += \
     device/htc/dlx/ramdisk/fstab.dlx:root/fstab.dlx \

@@ -121,7 +121,7 @@ on property:sys.usb.config=accessory,adb
 on property:sys.usb.config=audio_source
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0bb4
-    write /sys/class/android_usb/android0/idProduct 2d02
+    write /sys/class/android_usb/android0/idProduct 0dff
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
@@ -130,7 +130,7 @@ on property:sys.usb.config=audio_source
 on property:sys.usb.config=audio_source,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0bb4
-    write /sys/class/android_usb/android0/idProduct 2d03
+    write /sys/class/android_usb/android0/idProduct 0dff
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     start adbd
@@ -140,7 +140,7 @@ on property:sys.usb.config=audio_source,adb
 on property:sys.usb.config=accessory,audio_source
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0bb4
-    write /sys/class/android_usb/android0/idProduct 2d04
+    write /sys/class/android_usb/android0/idProduct 0dff
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
@@ -149,7 +149,7 @@ on property:sys.usb.config=accessory,audio_source
 on property:sys.usb.config=accessory,audio_source,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0bb4
-    write /sys/class/android_usb/android0/idProduct 2d05
+    write /sys/class/android_usb/android0/idProduct 0dff
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     start adbd

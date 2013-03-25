@@ -197,10 +197,6 @@ on boot
     	write /sys/kernel/debug/pm8921-dbg/addr 0x1F5
     	write /sys/kernel/debug/pm8921-dbg/data 0xE1
 
-    	# Load bcmdhd.ko while boThe file /media/Build/Development/boot.11/adb.log changed on disk.oting
-    	chmod 0444 /system/lib/modules/bcmdhd.ko
-   	 insmod /system/lib/modules/bcmdhd.ko
-
     	#Essential node for usbservice
  	#   mkdir /dev/bus/ 755 root root
  	#   mkdir /dev/bus/usb 755 root root

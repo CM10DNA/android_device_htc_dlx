@@ -1,4 +1,26 @@
 import init.dlx.usb.rc
+
+on early-init
+    mount debugfs debugfs /sys/kernel/debug
+
+on init
+    # See storage config details at http://source.android.com/tech/storage/
+    mkdir /mnt/shell/emulated 0700 shell shell
+    mkdir /storage/emulated 0555 root root  
+   
+    export EXTERNAL_STORAGE /storage/emulated/legacy
+    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
+    export EMULATED_STORAGE_TARGET /storage/emulated
+
+    # Support legacy paths
+    symlink /storage/emulated/legacy /sdcard
+    symlink /storage/emulated/legacy /mnt/sdcard
+    symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+
+    mkdir /devlog 0700 root root
+    # Import sensors
+    import /init.sensors.rc
        
 # on emmc mount the partition containing firmware
 on fs
@@ -57,24 +79,9 @@ on fs
     symlink /system/vendor/pittpatt /vendor/pittpatt
     symlink /system/vendor/firmware/libpn544_fw.so /vendor/firmware/libpn544_fw.so
 
-on init
-    # See storage config details at http://source.android.com/tech/storage/
-    mkdir /mnt/shell/emulated 0700 shell shell
-    mkdir /storage/emulated 0555 root root
-
-    export EXTERNAL_STORAGE /storage/emulated/legacy
-    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
-    export EMULATED_STORAGE_TARGET /storage/emulated
-
-    # Support legacy paths
-    symlink /storage/emulated/legacy /sdcard
-    symlink /storage/emulated/legacy /mnt/sdcard
-    symlink /storage/emulated/legacy /storage/sdcard0
-    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
-
-    mkdir /devlog 0700 root root
-    # Import sensors
-    import /init.sensors.rc
+on early-boot
+    # set RLIMIT_MEMLOCK to 64MB
+    setrlimit 8 67108864 67108864
 
 on post-fs-data
     # double check perms and set owner
@@ -110,10 +117,7 @@ on post-fs-data
 	# Set indication (checked by vold) that we have finished this action
 	setprop vold.post_fs_data_done 1
 
-on boot
-    # mount debugfs for systrace
-    mount debugfs /sys/kernel/debug /sys/kernel/debug
-  
+on boot  
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
     mkdir /data/media 0775 media_rw media_rw
     chown media_rw media_rw /data/media
@@ -126,6 +130,9 @@ on boot
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
     setprop wifi.interface wlan0
+
+    # Create directory used by audio subsystem
+    mkdir /data/misc/audio 0770 audio audio
 
     write /sys/devices/i2c-3/3-0024/cyttsp_update_fw 1
 

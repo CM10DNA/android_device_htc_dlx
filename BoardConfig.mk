@@ -55,10 +55,6 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 # Use libril in the device tree
 BOARD_PROVIDES_LIBRIL := true
 
-# Boot animation
-TARGET_SCREEN_HEIGHT := 1920
-TARGET_SCREEN_WIDTH := 1080
-
 # HTClog
 COMMON_GLOBAL_CFLAGS += -DHTCLOG
 

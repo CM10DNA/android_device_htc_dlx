@@ -66,7 +66,9 @@ PRODUCT_COPY_FILES += \
 
 # wifi config
 PRODUCT_COPY_FILES += \
-    device/htc/dlx/configs/wpa_supplicant.conf:/system/etc/wifi/wpa_supplicant.conf
+    device/htc/dlx/configs/wpa_supplicant.conf:/system/etc/wifi/wpa_supplicant.conf \
+    device/htc/dlx/configs/calibration:/system/etc/calibration \
+    device/htc/dlx/configs/calibration.gpio4:/system/etc/calibration.gpio4
 
 # Sound configs
 PRODUCT_COPY_FILES += \

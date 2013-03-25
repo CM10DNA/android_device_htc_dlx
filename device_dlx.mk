@@ -112,9 +112,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     device/htc/dlx/init.dlx.bt.sh:system/etc/init.dlx.bt.sh
-
-PRODUCT_PACKAGES += \
-	dlxril
 	
 # GPS
 PRODUCT_PACKAGES += \

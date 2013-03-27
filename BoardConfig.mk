@@ -50,7 +50,8 @@ TARGET_PREBUILT_KERNEL := device/htc/dlx/prebuilt/kernel
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_HAVE_BLUETOOTH_QCOM := true
+BLUETOOTH_HCI_USE_MCT := true
 
 # Use libril in the device tree
 BOARD_PROVIDES_LIBRIL := true

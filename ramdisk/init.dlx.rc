@@ -425,6 +425,12 @@ service qmuxd /system/bin/qmuxd
    	user radio
     	group radio audio gps
 
+service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
+    user bluetooth
+    group qcom_oncrpc bluetooth net_bt_admin
+    disabled
+    oneshot
+
 service netmgrd /system/bin/netmgrd
     class core
 

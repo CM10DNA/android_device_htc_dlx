@@ -160,7 +160,11 @@ on boot
     chmod 0660 /proc/bluetooth/sleep/proto
     chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
     chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
-  
+
+    # bluetooth MAC address programming
+    chown bluetooth bluetooth /sys/module/htc_bdaddress/parameters/bdaddress
+    setprop ro.bt.bdaddr_path /sys/module/htc_bdaddress/parameters/bdaddress
+
 	#simlock +
     	chown radio radio /dev/simlock
     	chmod 0660 /dev/simlock
@@ -425,12 +429,6 @@ service qmuxd /system/bin/qmuxd
    	user radio
     	group radio audio gps
 
-service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
-    user bluetooth
-    group qcom_oncrpc bluetooth net_bt_admin
-    disabled
-    oneshot
-
 service netmgrd /system/bin/netmgrd
     class core
 
@@ -564,7 +562,15 @@ service cand /system/bin/cand
 #    group root
 #    oneshot
 #    disabled
-    
+
+service hciattach /system/bin/brcm_patchram_plus --no2bytes --enable_hci \
+    --tosleep 50000 --baudrate 3000000 --use_baudrate_for_download \
+    --patchram /system/etc/firmware/BCM4334B0_002.001.013.0767.0794.hcd /dev/ttyHS0
+    class main
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
   
 service qcamerasvr /system/bin/mm-qcamera-daemon
         class late_start
@@ -581,3 +587,4 @@ on property:ro.baseband="msm"
     start port-bridge
     # Enable BT-DUN only for all msms
     setprop ro.qualcomm.bluetooth.dun true    
+

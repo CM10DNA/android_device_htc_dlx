@@ -18,7 +18,7 @@ $(call inherit-product, device/htc/dlx/device_dlx.mk)
 PRODUCT_DEVICE := dlx
 PRODUCT_NAME := cm_dlx 
 PRODUCT_BRAND := htc
-PRODUCT_MODEL := DLX
+PRODUCT_MODEL := HTC6435LVW
 PRODUCT_MANUFACTURER := HTC
 
 # Set build fingerprint / ID / Product Name etc.

@@ -1,4 +1,4 @@
-# Master file for snd_soc_msm tabla 2.0 sound card proj=DLX DATE= 20121017
+# Master file for snd_soc_msm tabla 2.0 sound card proj=DLX DATE= 20121129
 # Lists all use case verbs
 SectionUseCase."HiFi" { 
 SectionVerb
@@ -782,7 +782,7 @@ SectionVerb
 EndSection
 
 SectionVerb
-	Name "HiFiSpeaker Voice"
+	Name "HiFiVoice Speaker"
 
 	EnableSequence
 		'MI2S_RX Audio Mixer MultiMedia1':1:1
@@ -799,11 +799,11 @@ SectionVerb
 	Name "HiFiSpeaker FM"
 
 	EnableSequence
-		'SLIMBUS_0_RX Audio Mixer MultiMedia1':1:1
+		'MI2S_RX Audio Mixer MultiMedia1':1:1
 	EndSequence
 
 	DisableSequence
-		'SLIMBUS_0_RX Audio Mixer MultiMedia1':1:0
+		'MI2S_RX Audio Mixer MultiMedia1':1:0
 	EndSequence
 	CapturePCM  0
 	PlaybackPCM  0
@@ -2128,7 +2128,7 @@ SectionVerb
 EndSection
 
 SectionVerb
-	Name "Voice CallEarpiece Voice"
+	Name "Voice CallVoice Earpiece"
 
 	EnableSequence
 		'STUB_RX Mixer Voice Stub':1:1
@@ -2158,18 +2158,24 @@ SectionVerb
 EndSection
 
 SectionVerb
-	Name "Voice CallSpeaker Voice"
+	Name "Voice CallVoice Speaker"
 
 	EnableSequence
 		'MI2S_RX Port Mixer SLIM_1_TX':1:1
 		'MI2S_RX_Voice Mixer Voice Stub':1:1
 		'Voice Stub Tx Mixer SLIM_1_TX':1:1
+		'Voice Stub Tx Mixer MI2S_TX':1:1
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:1
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:1
 	EndSequence
 
 	DisableSequence
 		'MI2S_RX Port Mixer SLIM_1_TX':1:0
 		'MI2S_RX_Voice Mixer Voice Stub':1:0
-		'Voice Stub Tx Mixer SLIM_1_TX':1:0 
+		'Voice Stub Tx Mixer SLIM_1_TX':1:0
+		'Voice Stub Tx Mixer MI2S_TX':1:0
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:0
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:0
 	EndSequence
 	CapturePCM  0
 	PlaybackPCM  0
@@ -2198,12 +2204,18 @@ SectionVerb
 		'MI2S_RX Port Mixer SLIM_1_TX':1:1
 		'MI2S_RX_Voice Mixer Voice Stub':1:1
 		'Voice Stub Tx Mixer SLIM_1_TX':1:1
+		'Voice Stub Tx Mixer MI2S_TX':1:1
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:1
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:1
 	EndSequence
 
 	DisableSequence
 		'MI2S_RX Port Mixer SLIM_1_TX':1:0
 		'MI2S_RX_Voice Mixer Voice Stub':1:0
 		'Voice Stub Tx Mixer SLIM_1_TX':1:0
+		'Voice Stub Tx Mixer MI2S_TX':1:0
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:0
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:0
 	EndSequence
 	CapturePCM  0
 	PlaybackPCM  0
@@ -2691,6 +2703,20 @@ SectionVerb
 	PlaybackPCM  36
 EndSection
 
+SectionVerb
+	Name "HiFi TunnelVoice Speaker"
+
+	EnableSequence
+		'MI2S_RX Audio Mixer MultiMedia4':1:1
+	EndSequence
+
+	DisableSequence
+		'MI2S_RX Audio Mixer MultiMedia4':1:0
+	EndSequence
+	CapturePCM  0
+	PlaybackPCM  36
+EndSection
+
 }
 SectionUseCase."HiFi Tunnel2" { 
 SectionVerb
@@ -2779,6 +2805,20 @@ EndSection
 
 SectionVerb
 	Name "HiFi Tunnel2Speaker Beats"
+
+	EnableSequence
+		'MI2S_RX Audio Mixer MultiMedia7':1:1
+	EndSequence
+
+	DisableSequence
+		'MI2S_RX Audio Mixer MultiMedia7':1:0
+	EndSequence
+	CapturePCM  0
+	PlaybackPCM  37
+EndSection
+
+SectionVerb
+	Name "HiFi Tunnel2Voice Speaker"
 
 	EnableSequence
 		'MI2S_RX Audio Mixer MultiMedia7':1:1
@@ -3407,9 +3447,6 @@ SectionDevice
 		'DEC4 Volume':2:5A
 		'ADC3 Volume':1:100
 		'MICBIAS3 CAPLESS Switch':1:0
-		'Voice Stub Tx Mixer MI2S_TX':1:1
-		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:1
-		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:1
 	EndSequence
 
 	DisableSequence
@@ -3419,9 +3456,6 @@ SectionDevice
 		'DEC4 Volume':2:0
 		'ADC3 Volume':1:0
 		'MICBIAS3 CAPLESS Switch':1:0
-		'Voice Stub Tx Mixer MI2S_TX':1:0
-		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:0
-		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:0
 	EndSequence
 
 	ACDBID  52:2
@@ -3454,10 +3488,10 @@ SectionDevice
 		'RX4 Digital Volume':1:67
 		'RX5 Digital Volume':1:67
 		'RX6 Digital Volume':1:67
-		'LINEOUT1 Volume':1:66
-		'LINEOUT2 Volume':1:66
-		'LINEOUT3 Volume':1:66
-		'LINEOUT4 Volume':1:66
+		'LINEOUT1 Volume':1:0
+		'LINEOUT2 Volume':1:0
+		'LINEOUT3 Volume':1:0
+		'LINEOUT4 Volume':1:0
 	EndSequence
 
 	DisableSequence
@@ -3817,7 +3851,7 @@ SectionDevice
 		'SLIM_0_TX Channels':0:One
 		'SLIM TX7 MUX':0:DEC8
 		'DEC8 MUX':0:DMIC2
-		'DEC8 Volume':2:54
+		'DEC8 Volume':2:56
 		'MICBIAS1 CAPLESS Switch':1:1
 	EndSequence
 
@@ -3985,11 +4019,11 @@ SectionDevice
 		'SLIM_0_TX Channels':0:Two
 		'SLIM TX8 MUX':0:DEC8
 		'DEC8 MUX':0:DMIC2
-		'DEC8 Volume':2:50
+		'DEC8 Volume':2:56
 		'SLIM TX7 MUX':0:DEC4
 		'DEC4 MUX':0:ADC3
 		'DEC4 Volume':2:54
-		'ADC3 Volume':1:70
+		'ADC3 Volume':1:100
 		'MICBIAS1 CAPLESS Switch':1:1
 		'MICBIAS3 CAPLESS Switch':1:0
 	EndSequence
@@ -4016,11 +4050,11 @@ SectionDevice
 		'SLIM_0_TX Channels':0:Two
 		'SLIM TX7 MUX':0:DEC8
 		'DEC8 MUX':0:DMIC2
-		'DEC8 Volume':2:50
+		'DEC8 Volume':2:56
 		'SLIM TX8 MUX':0:DEC4
 		'DEC4 MUX':0:ADC3
 		'DEC4 Volume':2:54
-		'ADC3 Volume':1:70
+		'ADC3 Volume':1:100
 		'MICBIAS1 CAPLESS Switch':1:1
 		'MICBIAS3 CAPLESS Switch':1:0
 	EndSequence
@@ -4047,11 +4081,11 @@ SectionDevice
 		'SLIM_0_TX Channels':0:Two
 		'SLIM TX7 MUX':0:DEC8
 		'DEC8 MUX':0:DMIC2
-		'DEC8 Volume':2:50
+		'DEC8 Volume':2:56
 		'SLIM TX8 MUX':0:DEC4
 		'DEC4 MUX':0:ADC3
 		'DEC4 Volume':2:54
-		'ADC3 Volume':1:70
+		'ADC3 Volume':1:100
 		'MICBIAS1 CAPLESS Switch':1:1
 		'MICBIAS3 CAPLESS Switch':1:0
 	EndSequence
@@ -4135,7 +4169,7 @@ SectionDevice
 EndSection
 
 SectionDevice
-	Name "Earpiece Voice"
+	Name "Voice Earpiece"
 
 	EnableSequence
 		'SLIM_0_RX Channels':0:One
@@ -4169,9 +4203,6 @@ SectionDevice
 		'DEC4 Volume':2:5A
 		'ADC3 Volume':1:100
 		'MICBIAS3 CAPLESS Switch':1:0
-		'Voice Stub Tx Mixer MI2S_TX':1:1
-		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:1
-		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:1
 	EndSequence
 
 	DisableSequence
@@ -4181,16 +4212,13 @@ SectionDevice
 		'DEC4 Volume':2:0
 		'ADC3 Volume':1:0
 		'MICBIAS3 CAPLESS Switch':1:0
-		'Voice Stub Tx Mixer MI2S_TX':1:0
-		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:0
-		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:0
 	EndSequence
 
 	ACDBID  11:2
 EndSection
 
 SectionDevice
-	Name "Speaker Voice"
+	Name "Voice Speaker"
 
 	EnableSequence
 	EndSequence
@@ -4211,9 +4239,6 @@ SectionDevice
 		'DEC4 Volume':2:5A
 		'ADC3 Volume':1:100
 		'MICBIAS3 CAPLESS Switch':1:0
-		'Voice Stub Tx Mixer MI2S_TX':1:1
-		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:1
-		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:1
 	EndSequence
 
 	DisableSequence
@@ -4223,9 +4248,6 @@ SectionDevice
 		'DEC4 Volume':2:0
 		'ADC3 Volume':1:0
 		'MICBIAS3 CAPLESS Switch':1:0
-		'Voice Stub Tx Mixer MI2S_TX':1:0
-		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:0
-		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:0
 	EndSequence
 
 	ACDBID  510:2
@@ -6475,11 +6497,11 @@ SectionModifier
 	Name "Play MusicSpeaker FM"
 
 	EnableSequence
-		'SLIMBUS_0_RX Audio Mixer MultiMedia1':1:1
+		'MI2S_RX Audio Mixer MultiMedia1':1:1
 	EndSequence
 
 	DisableSequence
-		'SLIMBUS_0_RX Audio Mixer MultiMedia1':1:0
+		'MI2S_RX Audio Mixer MultiMedia1':1:0
 	EndSequence
 	CapturePCM  0
 	PlaybackPCM  0
@@ -6864,7 +6886,7 @@ SectionModifier
 EndSection
 
 SectionModifier
-	Name "Play VoiceEarpiece Voice"
+	Name "Play VoiceVoice Earpiece"
 
 	EnableSequence
 		'STUB_RX Mixer Voice Stub':1:1
@@ -6894,18 +6916,24 @@ SectionModifier
 EndSection
 
 SectionModifier
-	Name "Play VoiceSpeaker Voice"
+	Name "Play VoiceVoice Speaker"
 
 	EnableSequence
 		'MI2S_RX Port Mixer SLIM_1_TX':1:1
 		'MI2S_RX_Voice Mixer Voice Stub':1:1
 		'Voice Stub Tx Mixer SLIM_1_TX':1:1
+		'Voice Stub Tx Mixer MI2S_TX':1:1
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:1
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:1
 	EndSequence
 
 	DisableSequence
 		'MI2S_RX Port Mixer SLIM_1_TX':1:0
 		'MI2S_RX_Voice Mixer Voice Stub':1:0
 		'Voice Stub Tx Mixer SLIM_1_TX':1:0
+		'Voice Stub Tx Mixer MI2S_TX':1:0
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:0
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:0
 	EndSequence
 	CapturePCM  0
 	PlaybackPCM  0
@@ -6934,12 +6962,18 @@ SectionModifier
 		'MI2S_RX Port Mixer SLIM_1_TX':1:1
 		'MI2S_RX_Voice Mixer Voice Stub':1:1
 		'Voice Stub Tx Mixer SLIM_1_TX':1:1
+		'Voice Stub Tx Mixer MI2S_TX':1:1
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:1
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:1
 	EndSequence
 
 	DisableSequence
 		'MI2S_RX Port Mixer SLIM_1_TX':1:0
 		'MI2S_RX_Voice Mixer Voice Stub':1:0
 		'Voice Stub Tx Mixer SLIM_1_TX':1:0
+		'Voice Stub Tx Mixer MI2S_TX':1:0
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:0
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:0
 	EndSequence
 	CapturePCM  0
 	PlaybackPCM  0
@@ -7176,6 +7210,19 @@ EndSection
 
 SectionModifier
 	Name "Play TunnelSpeaker"
+
+	EnableSequence
+		'MI2S_RX Audio Mixer MultiMedia4':1:1
+	EndSequence
+
+	DisableSequence
+		'MI2S_RX Audio Mixer MultiMedia4':1:0
+	EndSequence
+	PlaybackPCM  36
+EndSection
+
+SectionModifier
+	Name "Play TunnelVoice Speaker"
 
 	EnableSequence
 		'MI2S_RX Audio Mixer MultiMedia4':1:1
@@ -7669,7 +7716,7 @@ SectionModifier
 EndSection
 
 SectionModifier
-	Name "Play MusicSpeaker Voice"
+	Name "Play MusicVoice Speaker"
 
 	EnableSequence
 		'MI2S_RX Audio Mixer MultiMedia1':1:1
@@ -7743,6 +7790,20 @@ SectionModifier
 EndSection
 
 SectionModifier
+	Name "Play MusicSpeaker FM"
+
+	EnableSequence
+		'MI2S_RX Audio Mixer MultiMedia1':1:1
+	EndSequence
+
+	DisableSequence
+		'MI2S_RX Audio Mixer MultiMedia1':1:0
+	EndSequence
+	CapturePCM  0
+	PlaybackPCM  0
+EndSection
+
+SectionModifier
 	Name "Play MusicSpeaker Beats"
 
 	EnableSequence
@@ -7757,7 +7818,7 @@ SectionModifier
 EndSection
 
 SectionModifier
-	Name "Play VoiceEarpiece Voice"
+	Name "Play VoiceVoice Earpiece"
 
 	EnableSequence
 		'STUB_RX Mixer Voice Stub':1:1
@@ -7771,18 +7832,24 @@ SectionModifier
 EndSection
 
 SectionModifier
-	Name "Play VoiceSpeaker Voice"
+	Name "Play VoiceVoice Speaker"
 
 	EnableSequence
 		'MI2S_RX Port Mixer SLIM_1_TX':1:1
 		'MI2S_RX_Voice Mixer Voice Stub':1:1
 		'Voice Stub Tx Mixer SLIM_1_TX':1:1
+		'Voice Stub Tx Mixer MI2S_TX':1:1
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:1
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:1
 	EndSequence
 
 	DisableSequence
 		'MI2S_RX Port Mixer SLIM_1_TX':1:0
 		'MI2S_RX_Voice Mixer Voice Stub':1:0
 		'Voice Stub Tx Mixer SLIM_1_TX':1:0
+		'Voice Stub Tx Mixer MI2S_TX':1:0
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:0
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:0
 	EndSequence
 	CapturePCM  0
 	PlaybackPCM  0
@@ -7795,12 +7862,18 @@ SectionModifier
 		'MI2S_RX Port Mixer SLIM_1_TX':1:1
 		'MI2S_RX_Voice Mixer Voice Stub':1:1
 		'Voice Stub Tx Mixer SLIM_1_TX':1:1
+		'Voice Stub Tx Mixer MI2S_TX':1:1
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:1
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:1
 	EndSequence
 
 	DisableSequence
 		'MI2S_RX Port Mixer SLIM_1_TX':1:0
 		'MI2S_RX_Voice Mixer Voice Stub':1:0
 		'Voice Stub Tx Mixer SLIM_1_TX':1:0
+		'Voice Stub Tx Mixer MI2S_TX':1:0
+		'SLIMBUS_3_RX_Voice Mixer Voice Stub':1:0
+		'SLIMBUS_3_RX Port Mixer MI2S_TX':1:0
 	EndSequence
 	CapturePCM  0
 	PlaybackPCM  0
@@ -8223,6 +8296,19 @@ SectionModifier
 	EndSequence
 	CapturePCM  0
 	PlaybackPCM  38
+EndSection
+
+SectionModifier
+	Name "Play Tunnel2Voice Speaker"
+
+	EnableSequence
+		'MI2S_RX Audio Mixer MultiMedia7':1:1
+	EndSequence
+
+	DisableSequence
+		'MI2S_RX Audio Mixer MultiMedia7':1:0
+	EndSequence
+	PlaybackPCM  37
 EndSection
 
 

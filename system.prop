@@ -28,7 +28,7 @@ ro.config.svlte1x=true
 debug.sf.hw=1
 debug.egl.hw=1
 debug.composition.type=gpu
-ro.sf.lcd_density=420
+ro.sf.lcd_density=480
 debug.mdpcomp.maxlayer=3
 debug.hwui.render_dirty_regions=false
 

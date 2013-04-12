@@ -624,7 +624,8 @@ int pcm_get_state(struct pcm *pcm)
     rc = ioctl(pcm->fd, SNDRV_PCM_IOCTL_STATUS, &status);
     if (rc) {
            ALOGE("cannot read pcm status: errno =%d\n", -errno);
-	}
+	   return -errno;
+    }
     return status.state;
 }
 

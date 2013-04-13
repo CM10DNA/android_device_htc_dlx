@@ -11,6 +11,9 @@ PRODUCT_RELEASE_NAME := dlx
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
+# Enhanced NFC
+$(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
+
 # Inherit device configuration
 $(call inherit-product, device/htc/dlx/device_dlx.mk)
 

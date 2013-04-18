@@ -501,6 +501,7 @@ service ril-daemon /system/bin/rild
     group radio cache inet misc audio media_rw sdcard_rw qcom_oncrpc diag qcom_diag
 
 on property:dev.bootcomplete=1
+    start mpdecision
     start bootcomplete
 
 service bootcomplete /system/bin/bootcomplete

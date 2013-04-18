@@ -68,6 +68,10 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/configs/calibration:/system/etc/calibration \
     device/htc/dlx/configs/calibration.gpio4:/system/etc/calibration.gpio4
 
+# Bluetooth vendor conf
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/bluetooth/bt_vendor.conf:/system/etc/bluetooth/bt_vendor.conf
+
 # Sound configs
 PRODUCT_COPY_FILES += \
     device/htc/dlx/dsp/soundimage/srs_bypass.cfg:system/etc/soundimage/srs_bypass.cfg \

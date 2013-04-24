@@ -53,6 +53,7 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/htc/dlx/bluetooth/include
 BOARD_BLUEDROID_VENDOR_CONF := device/htc/dlx/bluetooth/vnd_dlx.txt
+BOARD_BLUETOOTH_USES_HCIATTACH_PROPERTY := false
 
 # Use libril in the device tree
 BOARD_PROVIDES_LIBRIL := true

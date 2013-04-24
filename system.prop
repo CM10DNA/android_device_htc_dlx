@@ -135,16 +135,6 @@ persist.wifi.v6=true
 persist.wifi.v6.rs.count=5
 persist.wifi.v6.rs.timeout=5
 
-# Properties of BTLA stack
-service.brcm.bt.activation = 0
-service.brcm.bt.srv_active = 0
-service.brcm.bt.hcid_active = 0
-service.brcm.bt.btld = 0
-service.brcm.bt.btld_pid = 0
-service.brcm.bt.avrcp_pass_thru = 0
-service.brcm.bt.avrcp_toggle = 1
-service.brcm.bt.local_name =
-
 # Support HW reset
 ro.product.hwreset = 1
 
@@ -163,5 +153,4 @@ ro.com.google.gmsversion=4.1_r1
 ro.da1.enable=true
 ro.service.dpsvr.enabled=true
 ro.vendor.extension_library=/system/lib/libqc-opt.so
-net.bt.name=Android
 #dalvik.vm.stack-trace-file=/data/anr/traces.txt

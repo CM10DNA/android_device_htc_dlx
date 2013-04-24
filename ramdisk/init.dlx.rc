@@ -18,21 +18,16 @@ on init
     symlink /storage/emulated/legacy /storage/sdcard0
     symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 
-    mkdir /devlog 0700 root root
-    # Import sensors
-    import /init.sensors.rc
+on init
+   # For firmwares
+   mkdir /firmware 0771 system system
+   rm /vendor
+   mkdir /vendor 0771 system system
+   mkdir /vendor/firmware 0771 system system
        
 # on emmc mount the partition containing firmware
 on fs
-   mkdir /system
-
-   mount ext4 /dev/block/mmcblk0p32 /system wait ro data=ordered noauto_da_alloc
-
-   mkdir /data 0771 system system
    mount_all /fstab.dlx
-
-   mkdir /cache 0770 system cache
-   mount ext4 /dev/block/mmcblk0p33 /cache wait noatime nosuid nodev data=ordered noauto_da_alloc 
 
    mkdir /devlog 0700 root root
    mount ext4 /dev/block/mmcblk0p24 /devlog wait noatime nosuid nodev data=ordered noauto_da_alloc
@@ -44,15 +39,13 @@ on fs
    mkdir /tombstones/lpass 0771 system system
    mkdir /tombstones/dsps 0771 system system
 
-   # For firmwares
-   mkdir /firmware 0771 system system
-   mkdir /vendor 0771 system system
-   mkdir /vendor/firmware 0771 system system
-
    # 8064 has only mdm, use radio partition for it.
    mkdir /firmware/mdm 0771 system system
    mount vfat /dev/block/mmcblk0p16 /firmware/mdm wait ro shortname=lower
    exec /system/bin/sh /init.qcom.firmware_links.sh /firmware/mdm/image /vendor/firmware "*.mbn *.img"
+
+   #Provide the access to hostapd.conf only to root and group
+   chmod 0660 /data/hostapd/hostapd.conf
 
    mkdir /data/qcks 0700 root system
    mount tmpfs tmpfs /data/qcks size=20m,mode=0750,gid=1000
@@ -69,15 +62,15 @@ on fs
    exec /system/bin/sh /init.qcom.firmware_links.sh /firmware/q6 /vendor/firmware "q6.*"
 
    # link widevine drm library path
-#   symlink /system/vendor/lib /vendor/lib
+   symlink /system/vendor/lib /vendor/lib
 
    # we will remap this as /mnt/sdcard with the sdcard fuse tool
    chown media_rw media_rw /data/media
    setprop ro.crypto.fuse_sdcard true
 
-    # for NFC
-    symlink /system/vendor/pittpatt /vendor/pittpatt
-    symlink /system/vendor/firmware/libpn544_fw.so /vendor/firmware/libpn544_fw.so
+   # for NFC
+   symlink /system/vendor/pittpatt /vendor/pittpatt
+   symlink /system/vendor/firmware/libpn544_fw.so /vendor/firmware/libpn544_fw.so
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
@@ -87,16 +80,6 @@ on post-fs-data
     # double check perms and set owner
     chown root root /devlog
     chmod 0700 /devlog
-
-    mkdir /data/radio 0770 radio radio
-    chmod 2770 /data/radio
-#+SSD_RIL: from Qualcomm socket path
-    chmod 2770 /dev/socket/qmux_radio
-    mkdir /dev/socket/qmux_audio 0770 audio audio
-    chmod 2770 /dev/socket/qmux_audio
-    mkdir /dev/socket/qmux_bluetooth 0770 bluetooth bluetooth
-    chmod 2770 /dev/socket/qmux_bluetooth
-#-SSD_RIL: from Qualcomm socket path
 
     # HTC add: 3LM setting on ICS
     setprop ro.3lm.production 1
@@ -118,6 +101,36 @@ on post-fs-data
 	setprop vold.post_fs_data_done 1
 
 on boot  
+    #Create QMUX deamon socket area
+    mkdir /dev/socket/qmux_radio 0770 radio radio
+    chmod 2770 /dev/socket/qmux_radio
+    mkdir /dev/socket/qmux_audio 0770 media audio
+    chmod 2770 /dev/socket/qmux_audio
+    mkdir /dev/socket/qmux_bluetooth 0770 bluetooth bluetooth
+    chmod 2770 /dev/socket/qmux_bluetooth
+    mkdir /dev/socket/qmux_gps 0770 gps gps
+    chmod 2770 /dev/socket/qmux_gps
+
+    # Allow QMUX daemon to assign port open wait time
+    chown radio radio /sys/devices/virtual/hsicctl/hsicctl0/modem_wait
+
+    #Remove SUID bit for iproute2 ip tool
+    chmod 0755 /system/bin/ip
+
+    chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
+
+    # create symlink for fb1 as HDMI
+    symlink /dev/graphics/fb1 /dev/graphics/hdmi
+
+    # Remove write permissions to video related nodes
+    chmod 0664 /sys/devices/virtual/graphics/fb1/hpd
+    chmod 0664 /sys/devices/virtual/graphics/fb1/video_mode
+    chmod 0664 /sys/devices/virtual/graphics/fb1/format_3d
+
+    # Change owner and group for media server and surface flinger
+    chown system system /sys/devices/virtual/graphics/fb1/format_3d
+    chown system system /sys/devices/virtual/graphics/fb1/hpd
+
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
     mkdir /data/media 0775 media_rw media_rw
     chown media_rw media_rw /data/media
@@ -139,31 +152,28 @@ on boot
     start qcamerasvr
 
     # Chown polling nodes as needed from UI running on system server
-    chown system system /persist
-    chmod 0771 /persist
     chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.4/polling
 
     # bluetooth
-    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
-    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
+    chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
-    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
-    chown system system /sys/module/sco/parameters/disable_esco
-    chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
-    chmod 0660 /sys/module/bluetooth_power/parameters/power
-    chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chmod 0660 /proc/bluetooth/sleep/proto
-    chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
     chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
 
     # bluetooth MAC address programming
     chown bluetooth bluetooth /sys/module/htc_bdaddress/parameters/bdaddress
     setprop ro.bt.bdaddr_path /sys/module/htc_bdaddress/parameters/bdaddress
+
+    # bluetooth LPM
+    chmod 0220 /proc/bluetooth/sleep/lpm
+    chmod 0220 /proc/bluetooth/sleep/btwrite
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/lpm
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/btwrite
 
 	#simlock +
     	chown radio radio /dev/simlock
@@ -205,14 +215,6 @@ on boot
  	#   mkdir /dev/bus/ 755 root root
  	#   mkdir /dev/bus/usb 755 root root
 
-    	# create symlink for fb1 as HDMI
-    	symlink /dev/graphics/fb1 /dev/graphics/hdmi
-   
-    	# Remove write permissions to video related nodes
-	#    chmod 0664 /sys/devices/virtual/graphics/fb1/hpd
-	#    chmod 0664 /sys/devices/virtual/graphics/fb1/video_mode
-	#    chmod 0664 /sys/devices/virtual/graphics/fb1/format_3d
-
     	# Change owner and group for media server
 	#chown system system /sys/devices/virtual/graphics/fb1/format_3d
 
@@ -247,9 +249,6 @@ on boot
     	chown system system /sys/class/android_usb/f_diag/on
     	chown system system /sys/class/android_usb/f_rmnet/on
 
-    	#Set SUID bit for iproute2 ip tool
-    	chmod 4755 /system/bin/ip
-
 	#set diag permissions
     	chown radio radio /dev/diag
     	chown radio radio /dev/diag_mdm
@@ -264,8 +263,6 @@ on boot
 	   
 	chown root system /proc/driver/hdf
 	chmod 0664 /proc/driver/hdf
-
-    chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
     # low charge current in voice call
     chown radio radio /sys/class/power_supply/battery/phone_call
@@ -402,18 +399,6 @@ service post-boot /system/bin/sh /system/etc/init.post_boot.sh
     user root
     disabled
     oneshot
-
-#++SSD_BT
-service btld /system/bin/btld -lpm 1 -hb 3000000
-    user root
-    group bluetooth net_bt_admin
-    disabled
-    onrestart restart bluetoothd
-
-service dhcpcd_brcm-pan /system/bin/dhcpcd -ABKL
-    disabled
-    oneshot
-#--SSD_BT
 
 #DMagent
 service dmagent /system/bin/dmagent -N -P19 -VSY
@@ -563,15 +548,6 @@ service cand /system/bin/cand
 #    group root
 #    oneshot
 #    disabled
-
-service hciattach /system/bin/brcm_patchram_plus --no2bytes --enable_hci \
-    --tosleep 50000 --baudrate 3000000 --use_baudrate_for_download \
-    --patchram /system/etc/firmware/BCM4334B0_002.001.013.0767.0794.hcd /dev/ttyHS0
-    class main
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-    oneshot
   
 service qcamerasvr /system/bin/mm-qcamera-daemon
         class late_start

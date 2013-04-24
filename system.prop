@@ -25,12 +25,8 @@ ro.cdma.subscribe_on_ruim_ready = true
 ro.config.svlte1x=true
 
 # system props for display
-debug.sf.hw=1
-debug.egl.hw=1
-debug.composition.type=gpu
 ro.sf.lcd_density=480
 debug.mdpcomp.maxlayer=3
-debug.hwui.render_dirty_regions=false
 
 dalvik.vm.heapsize=384m
 dalvik.vm.heapgrowthlimit=192m

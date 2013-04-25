@@ -4190,19 +4190,19 @@ SectionDevice
 
 	EnableSequence
 		'SLIM_0_TX Channels':0:One
-		'SLIM TX7 MUX':0:DEC6
-		'DEC6 MUX':0:ADC1
-		'DEC6 Volume':1:72
+		'SLIM TX7 MUX':0:DEC8
+		'DEC8 MUX':0:DMIC2
+		'DEC8 Volume':2:72
 		'ADC1 Volume':1:100
-		'MICBIAS1 CAPLESS Switch':1:0
+		'MICBIAS1 CAPLESS Switch':1:1
 	EndSequence
 
 	DisableSequence
 		'SLIM TX7 MUX':0:ZERO
-		'DEC6 MUX':0:ZERO
-		'DEC6 Volume':1:60
+		'DEC8 MUX':0:ZERO
+		'DEC8 Volume':2:60
 		'ADC1 Volume':1:0
-		'MICBIAS1 CAPLESS Switch':1:1
+		'MICBIAS1 CAPLESS Switch':1:0
 	EndSequence
 
 	ACDBID	61:2
@@ -4215,19 +4215,19 @@ SectionDevice
 
 	EnableSequence
 		'SLIM_0_TX Channels':0:One
-		'SLIM TX7 MUX':0:DEC6
-		'DEC6 MUX':0:ADC1
-		'DEC6 Volume':1:68
-		'ADC1 Volume':1:66
-		'MICBIAS1 CAPLESS Switch':1:0
+		'SLIM TX7 MUX':0:DEC8
+		'DEC8 MUX':0:DMIC2
+		'DEC8 Volume':2:68
+		'ADC1 Volume':1:100
+		'MICBIAS1 CAPLESS Switch':1:1
 	EndSequence
 
 	DisableSequence
 		'SLIM TX7 MUX':0:ZERO
-		'DEC6 MUX':0:ZERO
-		'DEC6 Volume':1:68
+		'DEC8 MUX':0:ZERO
+		'DEC8 Volume':2:68
 		'ADC1 Volume':1:0
-		'MICBIAS1 CAPLESS Switch':1:1
+		'MICBIAS1 CAPLESS Switch':1:0
 	EndSequence
 
 	ACDBID	62:2

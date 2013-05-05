@@ -106,9 +106,6 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/idc/qwerty2.idc:system/usr/idc/qwerty2.idc \
     device/htc/dlx/idc/qwerty.idc:system/usr/idc/qwerty.idc \
     device/htc/dlx/idc/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc
-
-PRODUCT_COPY_FILES += \
-    device/htc/dlx/init.dlx.bt.sh:system/etc/init.dlx.bt.sh
 	
 # GPS
 PRODUCT_PACKAGES += \

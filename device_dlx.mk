@@ -17,8 +17,8 @@
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# common msm8960 configs
-$(call inherit-product, device/htc/msm8960-common/msm8960.mk)
+# common apq8064 configs
+$(call inherit-product, device/htc/apq8064-common/apq8064.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
 
@@ -54,16 +54,12 @@ PRODUCT_COPY_FILES += \
 # HTC BT audio config
 PRODUCT_COPY_FILES += device/htc/dlx/configs/AudioBTID.csv:system/etc/AudioBTID.csv
 
-# QC thermald config
-PRODUCT_COPY_FILES += device/htc/msm8960-common/configs/thermald.conf:system/etc/thermald.conf
-
 # vold config
 PRODUCT_COPY_FILES += \
     device/htc/dlx/configs/vold.fstab:system/etc/vold.fstab
 
 # wifi config
 PRODUCT_COPY_FILES += \
-    device/htc/dlx/configs/wpa_supplicant.conf:/system/etc/wifi/wpa_supplicant.conf \
     device/htc/dlx/configs/calibration:/system/etc/calibration \
     device/htc/dlx/configs/calibration.gpio4:/system/etc/calibration.gpio4
 

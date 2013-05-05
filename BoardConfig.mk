@@ -26,8 +26,8 @@
 
 #USE_CAMERA_STUB := true
 
-# inherit from common msm8960
--include device/htc/msm8960-common/BoardConfigCommon.mk
+# inherit from common apq8064
+-include device/htc/apq8064-common/BoardConfigCommon.mk
 
 # Flags
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp

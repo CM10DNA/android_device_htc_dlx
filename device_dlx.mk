@@ -78,7 +78,7 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/dsp/soundimage/srs_global.cfg:system/etc/soundimage/srs_global.cfg
 
 PRODUCT_COPY_FILES += \
-    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x_Fusion3_DMIC:/system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3_DMIC 
+    device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x_Fusion3:/system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3 
 
 # Keylayouts and Keychars
 PRODUCT_COPY_FILES += \

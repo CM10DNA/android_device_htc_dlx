@@ -242,7 +242,7 @@ on boot
 
     	# flashlight
     	chown system camera /sys/class/leds/flashlight/brightness
-   	 chmod 0666          /sys/class/leds/flashlight/brightness
+   	chmod 0666          /sys/class/leds/flashlight/brightness
 
 	# HTC SSD USB
     	chown system system /sys/class/android_usb/f_modem/on

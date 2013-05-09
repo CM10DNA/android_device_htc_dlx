@@ -4,7 +4,6 @@
 mobiledata.interfaces=rmnet0,rmnet1
 telephony.lteOnCdmaDevice=1
 telephony.rilV7NeedCDMALTEPhone = true
-ro.telephony.ril_class = HTC8960RIL
 rild.libpath=/system/lib/libril-qc-qmi-1.so
 rild.libargs=-d /dev/smd0
 persist.rild.nitz_plmn=

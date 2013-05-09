@@ -167,4 +167,16 @@
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->
     <integer name="config_deviceHardwareKeys">19</integer>
+
+    <string-array name="config_usbHostBlacklist">
+        <!-- /dev/bus/usb/001 is used for the modem -->
+        <item>/dev/bus/usb/001</item>
+    </string-array>
+
+    <!-- reference volume index for music stream to limit headphone volume and display warning -->
+    <integer name="config_safe_media_volume_index">7</integer>
+
+    <!-- Flag indicating if the speed up audio on mt call code should be executed -->
+    <bool name="config_speed_up_audio_on_mt_calls">true</bool>
+
 </resources>

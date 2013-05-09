@@ -51,8 +51,11 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
 
-# HTC BT audio config
-PRODUCT_COPY_FILES += device/htc/dlx/configs/AudioBTID.csv:system/etc/AudioBTID.csv
+# Media configs
+PRODUCT_COPY_FILES += device/htc/dlx/configs/AudioBTID.csv:system/etc/AudioBTID.csv \
+    device/htc/dlx/configs/audio_policy.conf:system/etc/audio_policy.conf \
+    device/htc/dlx/configs/media_profiles.xml:system/etc/media_profiles.xml \
+    device/htc/dlx/configs/media_codecs.xml:system/etc/media_codecs.xml
 
 # vold config
 PRODUCT_COPY_FILES += \

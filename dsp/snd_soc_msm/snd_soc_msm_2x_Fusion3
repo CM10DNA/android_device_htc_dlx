@@ -4340,24 +4340,31 @@ SectionDevice
 	Name "Speaker DMIC Endfire"
 
 	EnableSequence
-		'SLIM_0_TX Channels':0:One
-		'SLIM TX7 MUX':0:DEC4
+		'SLIM_0_TX Channels':0:Two
+		'SLIM TX7 MUX':0:DEC8
+		'DEC8 MUX':0:DMIC2
+		'DEC8 Volume':2:56
+		'SLIM TX8 MUX':0:DEC4
 		'DEC4 MUX':0:ADC3
-		'DEC4 Volume':2:5A
+		'DEC4 Volume':2:54
 		'ADC3 Volume':1:100
+		'MICBIAS1 CAPLESS Switch':1:1
 		'MICBIAS3 CAPLESS Switch':1:0
 	EndSequence
 
 	DisableSequence
-		'SLIM_0_TX Channels':0:ZERO
 		'SLIM TX7 MUX':0:ZERO
+		'SLIM TX8 MUX':0:ZERO
+		'DEC8 MUX':0:ZERO
 		'DEC4 MUX':0:ZERO
+		'DEC8 Volume':2:0
 		'DEC4 Volume':2:0
 		'ADC3 Volume':1:0
+		'MICBIAS1 CAPLESS Switch':1:0
 		'MICBIAS3 CAPLESS Switch':1:0
 	EndSequence
 
-	ACDBID  52:2
+	ACDBID  51:2
 EndSection
 
 SectionDevice

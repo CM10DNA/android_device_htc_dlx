@@ -24,10 +24,10 @@
 # variant, so that it gets overwritten by the parent (which goes
 # against the traditional rules of inheritance).
 
-#USE_CAMERA_STUB := true
-
 # inherit from common apq8064
 -include device/htc/apq8064-common/BoardConfigCommon.mk
+
+TARGET_SPECIFIC_HEADER_PATH := device/htc/dlx/include
 
 # Flags
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp

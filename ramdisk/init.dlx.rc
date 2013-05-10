@@ -98,6 +98,7 @@ on boot
     chown system system /sys/devices/virtual/graphics/fb1/hpd
     
     write /sys/devices/i2c-3/3-0024/cyttsp_update_fw 1
+    start qcamerasvr
 
     # bluetooth
     chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
@@ -169,6 +170,10 @@ on boot
     # Audio
     chown system audio /dev/tfa9887
     chmod 0664 /dev/tfa9887
+
+    # For camera to switch burst mode
+    chown media media /sys/devices/platform/msm_sdcc.1/burst
+    chown media media /proc/emmc_burst
 
     # HTC SSD Camera
     chown media system /sys/camera_htccallback/htccallback

@@ -183,4 +183,4 @@ PRODUCT_LOCALES += en_US
 $(call inherit-product-if-exists, vendor/htc/dlx/dlx-vendor.mk)
 
 # call dalvik heap config
-$(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
+$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)

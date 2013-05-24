@@ -249,8 +249,6 @@ case "$target" in
         chmod 220 /sys/devices/platform/msm_hsusb/gadget/wakeup
         ;;
     "msm8960")
-	echo 1 > /data/system/sensors/settings
-	start sensors
 	chown root.system /sys/devices/platform/msm_otg/msm_hsusb/gadget/wakeup
 	chmod 220 /sys/devices/platform/msm_otg/msm_hsusb/gadget/wakeup
 

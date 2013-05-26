@@ -48,9 +48,6 @@ TARGET_KERNEL_CONFIG := dlx_defconfig
 TARGET_KERNEL_SOURCE := kernel/htc/dlx-$(TARGET_KERNEL_VERSION)
 TARGET_PREBUILT_KERNEL := device/htc/dlx/prebuilt/kernel
 
-# We use the old ION API still
-BOARD_HAVE_OLD_ION_API := true
-
 # Audio
 BOARD_USES_FLUENCE_INCALL := true
 BOARD_USES_SEPERATED_AUDIO_INPUT := true

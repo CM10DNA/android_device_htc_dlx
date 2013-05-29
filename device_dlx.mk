@@ -120,6 +120,7 @@ PRODUCT_COPY_FILES += \
 
 # NFC
 PRODUCT_PACKAGES += \
+    nfc.msm8960 \
     libnfc \
     libnfc_ndef \
     libnfc_jni \

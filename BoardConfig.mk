@@ -32,6 +32,7 @@ TARGET_SPECIFIC_HEADER_PATH := device/htc/dlx/include
 # Flags
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
+COMMON_GLOBAL_CFLAGS += -DNEW_ION_API
 
 # Krait optimizations
 TARGET_USE_KRAIT_PLD_SET := true

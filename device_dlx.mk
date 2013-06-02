@@ -137,6 +137,10 @@ PRODUCT_COPY_FILES += \
         frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
         frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
+# Increase the HWUI font cache since we have tons of RAM
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hwui.text_cache_width=2048
+
 # Extra properties
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.setupwizard.enable_bypass=1 \
@@ -186,3 +190,6 @@ $(call inherit-product-if-exists, vendor/htc/dlx/dlx-vendor.mk)
 
 # call dalvik heap config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
+
+# call hwui memory config
+$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)

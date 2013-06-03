@@ -23,7 +23,7 @@ $(call inherit-product, device/htc/msm8960-common/msm8960.mk)
 DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
 
 # The gps config appropriate for this device
-PRODUCT_COPY_FILES := device/common/gps/gps.conf_US_SUPL:system/etc/gps.conf
+PRODUCT_COPY_FILES += device/common/gps/gps.conf_US_SUPL:system/etc/gps.conf
 
 # Ramdisk
 PRODUCT_COPY_FILES += \

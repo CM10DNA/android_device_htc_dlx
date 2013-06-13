@@ -32,7 +32,6 @@ TARGET_SPECIFIC_HEADER_PATH := device/htc/dlx/include
 # Flags
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
-COMMON_GLOBAL_CFLAGS += -DNEW_ION_API
 
 # Krait optimizations
 TARGET_USE_KRAIT_PLD_SET := true
@@ -61,7 +60,6 @@ BOARD_USES_FLUENCE_INCALL := true
 BOARD_USES_SEPERATED_AUDIO_INPUT := true
 BOARD_USES_SEPERATED_VOICE_SPEAKER := true
 TARGET_USES_QCOM_MM_AUDIO := true
-TARGET_USES_QCOM_COMPRESSED_AUDIO := true
 BOARD_HAVE_HTC_CSDCLIENT := true
 
 # Camera

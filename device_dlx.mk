@@ -79,6 +79,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/htc/dlx/dsp/snd_soc_msm/snd_soc_msm_2x_Fusion3:/system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3 
 
+PRODUCT_COPY_FILES += \
+    device/htc/dlx/configs/audio_policy.conf:system/etc/audio_policy.conf
+
 # Keylayouts and Keychars
 PRODUCT_COPY_FILES += \
     device/htc/dlx/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl \

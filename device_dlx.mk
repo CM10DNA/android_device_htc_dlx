@@ -66,6 +66,10 @@ PRODUCT_COPY_FILES += \
     device/htc/dlx/configs/calibration:/system/etc/calibration \
     device/htc/dlx/configs/calibration.gpio4:/system/etc/calibration.gpio4
 
+# Audio config
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf
+
 # Sound configs
 PRODUCT_COPY_FILES += \
     device/htc/dlx/dsp/soundimage/srs_bypass.cfg:system/etc/soundimage/srs_bypass.cfg \

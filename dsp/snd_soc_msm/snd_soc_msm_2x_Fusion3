@@ -460,8 +460,8 @@ SectionVerb
 	DisableSequence
 		'MultiMedia4 Mixer SLIM_0_TX':1:1
 	EndSequence
-	CapturePCM  36
-	PlaybackPCM  36
+	CapturePCM  38
+	PlaybackPCM  38
 EndSection
 
 }
@@ -701,8 +701,8 @@ SectionVerb
 		'VoLTE Stub Tx Mixer STUB_TX_HL':1:0
 		'VoLTE Stub Tx Mixer STUB_1_TX_HL':1:0
 	EndSequence
-	PlaybackPCM  13
-	CapturePCM  13
+	PlaybackPCM  15
+	CapturePCM  15
 EndSection
 
 }
@@ -722,8 +722,8 @@ SectionVerb
 		'Voice2 Stub Tx Mixer STUB_TX_HL':1:0
 		'Voice2 Stub Tx Mixer STUB_1_TX_HL':1:0
 	EndSequence
-	PlaybackPCM  15
-	CapturePCM  15
+	PlaybackPCM  17
+	CapturePCM  17
 EndSection
 
 }
@@ -820,7 +820,7 @@ SectionVerb
 		'SLIMBUS_0_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM  0
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 SectionVerb
@@ -834,7 +834,7 @@ SectionVerb
 		'HDMI Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM  0
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 SectionVerb
@@ -848,7 +848,7 @@ SectionVerb
 		'AUX_PCM_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM  0
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 SectionVerb
@@ -862,7 +862,7 @@ SectionVerb
 		'AUX_PCM_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM  0
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 SectionVerb
@@ -876,7 +876,7 @@ SectionVerb
 		'AFE_PCM_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM 0
-	PlaybackPCM 36
+	PlaybackPCM 38
 EndSection
 
 # HTC additional verbs
@@ -891,7 +891,7 @@ SectionVerb
 		'MI2S_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM  0
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 }
 SectionUseCase."HiFi Lowlatency Rec" {
@@ -906,8 +906,8 @@ SectionVerb
 	DisableSequence
 		'MultiMedia5 Mixer SLIM_0_TX':1:0
 	EndSequence
-	CapturePCM  14
-	PlaybackPCM  14
+	CapturePCM  16
+	PlaybackPCM  16
 EndSection
 }
 SectionUseCase."HiFi Lowlatency" {
@@ -922,8 +922,8 @@ SectionVerb
 	DisableSequence
 		'SLIMBUS_0_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 14
-	CapturePCM 14
+	PlaybackPCM 16
+	CapturePCM 16
 EndSection
 }
 SectionDevice
@@ -2723,7 +2723,7 @@ SectionModifier
 	DisableSequence
 		'SLIMBUS_0_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 SectionModifier
@@ -2737,7 +2737,7 @@ SectionModifier
 		'HDMI Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM  0
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 SectionModifier
@@ -2751,7 +2751,7 @@ SectionModifier
 		'AUX_PCM_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM  0
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 SectionModifier
@@ -2765,7 +2765,7 @@ SectionModifier
 		'AUX_PCM_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM  0
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 SectionModifier
@@ -2779,7 +2779,7 @@ SectionModifier
 		'AFE_PCM_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
 	CapturePCM  0
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 # HTC additional modifiers
@@ -2793,7 +2793,7 @@ SectionModifier
 	DisableSequence
 		'MI2S_RX Audio Mixer MultiMedia4':1:0
 	EndSequence
-	PlaybackPCM  36
+	PlaybackPCM  38
 EndSection
 
 SectionModifier

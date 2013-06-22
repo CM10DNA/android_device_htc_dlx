@@ -974,8 +974,8 @@ SectionVerb
 	DisableSequence
 		'MI2S_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
-	CapturePCM 40
+	PlaybackPCM 41
+	CapturePCM 41
 EndSection
 
 SectionVerb
@@ -988,7 +988,7 @@ SectionVerb
 	DisableSequence
 		'HDMI Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionVerb
@@ -1001,7 +1001,7 @@ SectionVerb
 	DisableSequence
 		'AUX_PCM_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionVerb
@@ -1014,7 +1014,7 @@ SectionVerb
 	DisableSequence
 		'AUX_PCM_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionVerb
@@ -1027,7 +1027,7 @@ SectionVerb
 	DisableSequence
 		'AFE_PCM_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionVerb

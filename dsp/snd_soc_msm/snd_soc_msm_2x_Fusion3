@@ -701,8 +701,8 @@ SectionVerb
 		'VoLTE Stub Tx Mixer STUB_TX_HL':1:0
 		'VoLTE Stub Tx Mixer STUB_1_TX_HL':1:0
 	EndSequence
-	PlaybackPCM  13
-	CapturePCM  13
+	PlaybackPCM  15
+	CapturePCM  15
 EndSection
 
 }
@@ -722,8 +722,8 @@ SectionVerb
 		'Voice2 Stub Tx Mixer STUB_TX_HL':1:0
 		'Voice2 Stub Tx Mixer STUB_1_TX_HL':1:0
 	EndSequence
-	PlaybackPCM  15
-	CapturePCM  15
+	PlaybackPCM  17
+	CapturePCM  17
 EndSection
 
 }
@@ -905,8 +905,8 @@ SectionVerb
 	DisableSequence
 		'MultiMedia5 Mixer SLIM_0_TX':1:0
 	EndSequence
-	CapturePCM  40
-	PlaybackPCM  40
+	CapturePCM  41
+	PlaybackPCM  41
 EndSection
 
 SectionVerb
@@ -919,8 +919,8 @@ SectionVerb
 	DisableSequence
 		'MultiMedia5 Mixer AUX_PCM_TX':1:0
 	EndSequence
-	CapturePCM  40
-	PlaybackPCM  40
+	CapturePCM  41
+	PlaybackPCM  41
 EndSection
 
 SectionVerb
@@ -933,8 +933,8 @@ SectionVerb
 	DisableSequence
 		'MultiMedia5 Mixer AUX_PCM_TX':1:0
 	EndSequence
-	CapturePCM  40
-	PlaybackPCM  40
+	CapturePCM  41
+	PlaybackPCM  41
 EndSection
 
 SectionVerb
@@ -945,8 +945,8 @@ SectionVerb
 
 	DisableSequence
 	EndSequence
-	CapturePCM  40
-	PlaybackPCM  40
+	CapturePCM  41
+	PlaybackPCM  41
 EndSection
 
 SectionVerb
@@ -959,8 +959,8 @@ SectionVerb
 	DisableSequence
 		'MultiMedia5 Mixer AFE_PCM_TX':1:0
 	EndSequence
-	CapturePCM  40
-	PlaybackPCM  40
+	CapturePCM  41
+	PlaybackPCM  41
 EndSection
 }
 SectionUseCase."HiFi Lowlatency" {
@@ -974,8 +974,8 @@ SectionVerb
 	DisableSequence
 		'MI2S_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
-	CapturePCM 40
+	PlaybackPCM 41
+	CapturePCM 41
 EndSection
 
 SectionVerb
@@ -988,7 +988,7 @@ SectionVerb
 	DisableSequence
 		'HDMI Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionVerb
@@ -1001,7 +1001,7 @@ SectionVerb
 	DisableSequence
 		'AUX_PCM_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionVerb
@@ -1014,7 +1014,7 @@ SectionVerb
 	DisableSequence
 		'AUX_PCM_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionVerb
@@ -1027,7 +1027,7 @@ SectionVerb
 	DisableSequence
 		'AFE_PCM_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionVerb
@@ -1038,7 +1038,7 @@ SectionVerb
 
 	DisableSequence
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 }
 SectionDevice
@@ -2921,7 +2921,7 @@ SectionModifier
 	DisableSequence
 		'MI2S_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionModifier
@@ -2934,7 +2934,7 @@ SectionModifier
 	DisableSequence
 		'AUX_PCM_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionModifier
@@ -2947,7 +2947,7 @@ SectionModifier
 	DisableSequence
 		'AUX_PCM_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionModifier
@@ -2960,7 +2960,7 @@ SectionModifier
 	DisableSequence
 		'AFE_PCM_RX Audio Mixer MultiMedia5':1:0
 	EndSequence
-	PlaybackPCM 40
+	PlaybackPCM 41
 EndSection
 
 SectionModifier
@@ -2973,8 +2973,8 @@ SectionModifier
 	DisableSequence
 		'MultiMedia5 Mixer SLIM_0_TX':1:0
 	EndSequence
-	PlaybackPCM 40
-	CapturePCM 40
+	PlaybackPCM 41
+	CapturePCM 41
 EndSection
 
 SectionModifier
@@ -2987,8 +2987,8 @@ SectionModifier
 	DisableSequence
 		'MultiMedia5 Mixer AUX_PCM_TX':1:0
 	EndSequence
-	PlaybackPCM 40
-	CapturePCM 40
+	PlaybackPCM 41
+	CapturePCM 41
 EndSection
 
 SectionModifier
@@ -3001,8 +3001,8 @@ SectionModifier
 	DisableSequence
 		'MultiMedia5 Mixer AUX_PCM_TX':1:0
 	EndSequence
-	PlaybackPCM 40
-	CapturePCM 40
+	PlaybackPCM 41
+	CapturePCM 41
 EndSection
 
 SectionModifier
@@ -3013,8 +3013,8 @@ SectionModifier
 
 	DisableSequence
 	EndSequence
-	PlaybackPCM 40
-	CapturePCM 40
+	PlaybackPCM 41
+	CapturePCM 41
 EndSection
 
 SectionModifier
@@ -3027,8 +3027,8 @@ SectionModifier
 	DisableSequence
 		'MultiMedia5 Mixer AFE_PCM_TX':1:0
 	EndSequence
-	PlaybackPCM 40
-	CapturePCM 40
+	PlaybackPCM 41
+	CapturePCM 41
 EndSection
 
 SectionModifier

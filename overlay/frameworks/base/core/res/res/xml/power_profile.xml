@@ -30,26 +30,22 @@
         <value>1242000</value>
         <value>1350000</value>
         <value>1458000</value>
-        <value>1566000</value>
-        <value>1674000</value>
-        <value>1728000</value>
+        <value>1512000</value>
     </array>
     <item name="cpu.idle">0.72</item>
     <array name="cpu.active">
-        <value>7.6</value>
-        <value>8.6</value>
-        <value>10.1</value>
-        <value>11.3</value>
-        <value>13.1</value>
-        <value>15.3</value>
-        <value>17.3</value>
-        <value>23.3</value>
-        <value>23.5</value>
-        <value>27.4</value>
-        <value>30.9</value>
-        <value>35.9</value>
-        <value>42.8</value>
-        <value>45.2</value>
+        <value>92.6</value>
+        <value>108.6</value>
+        <value>118.8</value>
+        <value>121.4</value>
+        <value>127.3</value>
+        <value>133.1</value>
+        <value>173.3</value>
+        <value>209.5</value>
+        <value>216.5</value>
+        <value>228.5</value>
+        <value>236.0</value>
+        <value>239.7</value>
     </array>
-    <item name="battery.capacity">2300</item>
+    <item name="battery.capacity">2100</item>
 </device>

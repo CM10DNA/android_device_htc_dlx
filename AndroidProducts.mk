@@ -1,2 +1,2 @@
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/device_dlx.mk
+    $(LOCAL_DIR)/full_dlx.mk

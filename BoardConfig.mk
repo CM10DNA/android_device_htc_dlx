@@ -33,6 +33,9 @@ TARGET_SPECIFIC_HEADER_PATH := device/htc/dlx/include
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 
+# Assert
+TARGET_OTA_ASSERT_DEVICE := dlx
+
 # Krait optimizations
 TARGET_USE_KRAIT_PLD_SET := true
 TARGET_KRAIT_BIONIC_PLDOFFS := 10
@@ -53,7 +56,6 @@ BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01400000
 TARGET_KERNEL_VERSION := 3.4
 TARGET_KERNEL_CONFIG := dlx_defconfig
 TARGET_KERNEL_SOURCE := kernel/htc/dlx-$(TARGET_KERNEL_VERSION)
-TARGET_PREBUILT_KERNEL := device/htc/dlx/prebuilt/kernel
 
 # Audio
 BOARD_USES_FLUENCE_INCALL := true

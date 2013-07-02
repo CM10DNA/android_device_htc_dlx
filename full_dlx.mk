@@ -20,19 +20,23 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # common msm8960 configs
 $(call inherit-product, device/htc/msm8960-common/msm8960.mk)
 
-DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
+# Inherit from dlx device
+$(call inherit-product, device/htc/dlx/device.mk)
 
 # The gps config appropriate for this device
 PRODUCT_COPY_FILES += device/common/gps/gps.conf_US_SUPL:system/etc/gps.conf
 
 # Ramdisk
-PRODUCT_COPY_FILES += \
-    device/htc/dlx/ramdisk/fstab.dlx:root/fstab.dlx \
-    device/htc/dlx/ramdisk/init.dlx.rc:root/init.dlx.rc \
-    device/htc/dlx/ramdisk/ueventd.dlx.rc:root/ueventd.dlx.rc \
-    device/htc/dlx/ramdisk/init.dlx.usb.rc:root/init.dlx.usb.rc \
-    device/htc/dlx/ramdisk/init.qcom.sh:root/init.qcom.sh \
-    device/htc/dlx/ramdisk/init.qcom.firmware_links.sh:root/init.qcom.firmware_links.sh
+PRODUCT_PACKAGES += \
+    fstab.dlx \
+    init.qcom.firmware_links.sh \
+    init.qcom.sh \
+    init.dlx.rc \
+    init.dlx.usb.rc \
+    ueventd.dlx.rc
+
+PRODUCT_PACKAGES += \
+    libnetcmdiface
 
 # Custom Recovery and Charging
 PRODUCT_COPY_FILES += \
@@ -52,10 +56,13 @@ endif
 PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
     frameworks/base/nfc-extras/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
+    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+    frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml
 
 # Media configs
 PRODUCT_COPY_FILES += device/htc/dlx/configs/AudioBTID.csv:system/etc/AudioBTID.csv
+PRODUCT_COPY_FILES += device/htc/dlx/configs/AudioBTIDnew.csv:system/etc/AudioBTIDnew.csv
+PRODUCT_COPY_FILES += device/htc/dlx/configs/audio_effects.conf:system/etc/audio_effects.conf
 
 # vold config
 PRODUCT_COPY_FILES += \
@@ -122,9 +129,6 @@ PRODUCT_PACKAGES += \
         libgps.utils \
         gps.msm8960
 
-PRODUCT_COPY_FILES += \
-    device/htc/dlx/prebuilt/lib/libloc_api_v02.so:system/lib/libloc_api_v02.so
-
 # NFC
 PRODUCT_PACKAGES += \
     nfc.msm8960 \
@@ -160,13 +164,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.clientidbase.gmm=android-htc \
     ro.com.google.clientidbase.ms=android-verizon \
     gsm.sim.operator.alpha = Verizon \
-    gsm.sim.operator.numeric = 310012 \
+    gsm.sim.operator.numeric = 311480 \
     gsm.sim.operator.iso-country = us \
     gsm.operator.alpha = Verizon \
-    gsm.operator.numeric = 310012 \
+    gsm.operator.numeric = 311480 \
     gsm.operator.iso-country = us \
     ro.cdma.home.operator.alpha = Verizon \
-    ro.cdma.home.operator.numeric = 310012 \
+    ro.cdma.home.operator.numeric = 311480 \
     ro.cdma.data_retry_config=max_retries=infinite,0,0,60000,120000,480000,900000 \
     ro.ril.set.mtusize=1428 \
     persist.radio.snapshot_enabled=1 \
@@ -191,9 +195,6 @@ PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi xxhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi xxhdpi
 PRODUCT_LOCALES += en_US
-
-# call the proprietary setup
-$(call inherit-product-if-exists, vendor/htc/dlx/dlx-vendor.mk)
 
 # call dalvik heap config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)

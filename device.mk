@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012 The Android Open-Source Project
+# Copyright (C) 2011 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,8 +14,11 @@
 # limitations under the License.
 #
 
-LOCAL_PATH := $(call my-dir)
+## (2) Also get non-open-source specific aspects if available
+$(call inherit-product-if-exists, vendor/htc/dlx/dlx-vendor.mk)
 
-ifeq ($(TARGET_DEVICE),dlx)
-    include $(call all-subdir-makefiles,$(LOCAL_PATH))
-endif
+## overlays
+DEVICE_PACKAGE_OVERLAYS += device/htc/dlx/overlay
+
+# Inherit from msm8960-common
+$(call inherit-product, device/htc/msm8960-common/msm8960.mk)

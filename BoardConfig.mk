@@ -26,6 +26,7 @@
 
 # inherit from common msm8960
 -include device/htc/msm8960-common/BoardConfigCommon.mk
+TARGET_CPU_VARIANT=krait
 
 TARGET_SPECIFIC_HEADER_PATH := device/htc/dlx/include
 

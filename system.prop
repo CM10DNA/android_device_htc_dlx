@@ -2,7 +2,6 @@
 # system.prop for dlx
 #
 mobiledata.interfaces=rmnet0,rmnet1
-ro.telephony.ril_class=HTCQualcommRIL
 telephony.lteOnCdmaDevice=1
 telephony.rilV7NeedCDMALTEPhone = true
 rild.libpath=/system/lib/libril-qc-qmi-1.so

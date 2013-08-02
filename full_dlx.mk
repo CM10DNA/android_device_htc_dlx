@@ -66,10 +66,6 @@ PRODUCT_COPY_FILES += device/htc/dlx/configs/AudioBTID.csv:system/etc/AudioBTID.
 PRODUCT_COPY_FILES += device/htc/dlx/configs/AudioBTIDnew.csv:system/etc/AudioBTIDnew.csv
 PRODUCT_COPY_FILES += device/htc/dlx/configs/audio_effects.conf:system/etc/audio_effects.conf
 
-# vold config
-PRODUCT_COPY_FILES += \
-    device/htc/dlx/configs/vold.fstab:system/etc/vold.fstab
-
 # wifi config
 PRODUCT_COPY_FILES += \
     device/htc/dlx/configs/calibration:/system/etc/calibration \

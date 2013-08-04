@@ -1,4 +1,4 @@
-HEADER,DLX_20130331_v10,Neo
+HEADER,DLX_20130621_v10,Ken
 Default,1001,1101,
 Default Car-kit,1201,1301,
 Default BT_NRECon,1027,1127,
@@ -72,7 +72,7 @@ MFE XI Telecom,1801,1901
 @^[0-9]{8}-CH[1-4]$,1801,1901,Metrico BT MOS
 @^MT8855A [0-9]{4}$,1802,1902,VzW lab
 Sennheiser MM550-X,1027,1127,
-Motorola Elite Flip,1027,11271,
+Motorola Elite Flip,1027,1127,
 Motorola Elite Sliver,1027,1127,
 ------,1408,1508,
 ------,1410,1510,

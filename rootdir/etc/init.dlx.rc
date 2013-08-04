@@ -430,3 +430,7 @@ on property:ro.baseband="msm"
     # Enable BT-DUN only for all msms
     setprop ro.qualcomm.bluetooth.dun true    
 
+on property:service.adb.root=1
+    write /sys/class/android_usb/android0/enable 0
+    restart adbd
+    write /sys/class/android_usb/android0/enable 1

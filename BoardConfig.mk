@@ -105,9 +105,8 @@ WIFI_DRIVER_FW_PATH_STA := "/system/etc/firmware/fw_bcm4334.bin"
 WIFI_DRIVER_FW_PATH_AP := "/system/etc/firmware/fw_bcm4334_apsta.bin"
 WIFI_DRIVER_FW_PATH_P2P := "/system/etc/firmware/fw_bcm4334_p2p.bin"
 
-# GPS
-BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
-TARGET_NO_RPC := true
+#GPS
+TARGET_PROVIDES_GPS_LOC_API := true
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true

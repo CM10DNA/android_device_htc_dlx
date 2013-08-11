@@ -229,6 +229,16 @@ on boot
     chown radio radio /sys/class/power_supply/battery/network_search
     chown system system /sys/class/power_supply/battery/navigation
 
+    # Restorecon
+    restorecon /system/bin/efsks
+    restorecon /system/bin/ks
+    restorecon /system/bin/qcks
+    restorecon /system/etc/hldm.bin
+    restorecon /system/etc/hltof.bin
+    restorecon /system/etc/hltrd.bin
+    restorecon /system/etc/firmware/a300_pfp.fw
+    restorecon /system/etc/firmware/a300_pm4.fw
+
 on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
 

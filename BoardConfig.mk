@@ -139,7 +139,8 @@ BOARD_SEPOLICY_UNION := \
 	tee.te \
 	thermald.te \
 	ueventd.te \
-	wpa_supplicant.te
+	wpa_supplicant.te \
+	zygote.te
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true

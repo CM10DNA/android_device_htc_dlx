@@ -30,6 +30,7 @@ ro.cdma.subscribe_on_ruim_ready = true
 # system props for display
 ro.sf.lcd_density=480
 debug.mdpcomp.maxlayer=3
+persist.sys.use_dithering = 2
 
 ro.hdmi.enable=true
 

@@ -65,8 +65,6 @@ BOARD_USES_SEPERATED_VOIP := true
 BOARD_HAVE_HTC_CSDCLIENT := true
 
 # Camera
-USE_CAMERA_STUB := false
-TARGET_PROVIDES_CAMERA_HAL := true
 BOARD_NEEDS_MEMORYHEAPPMEM := true
 COMMON_GLOBAL_CFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
 COMMON_GLOBAL_CFLAGS += -DHTC_CAMERA_HARDWARE
@@ -107,6 +105,42 @@ WIFI_DRIVER_FW_PATH_P2P := "/system/etc/firmware/fw_bcm4334_p2p.bin"
 # GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
 TARGET_NO_RPC := true
+
+# SElinux
+BOARD_SEPOLICY_DIRS := \
+	device/htc/dlx/sepolicy
+
+BOARD_SEPOLICY_UNION := \
+	file_contexts \
+	property_contexts \
+	te_macros \
+	bluetooth_loader.te \
+	bridge.te \
+	camera.te \
+	conn_init.te \
+	device.te \
+	dhcp.te \
+	domain.te \
+	drmserver.te \
+	file.te \
+	kickstart.te \
+	init.te \
+	mediaserver.te \
+	mpdecision.te \
+	netmgrd.te \
+	property.te \
+	qmux.te \
+	restorecon.te \
+	rild.te \
+	rmt.te \
+	sensors.te \
+	surfaceflinger.te \
+	system.te \
+	tee.te \
+	thermald.te \
+	ueventd.te \
+	wpa_supplicant.te \
+	zygote.te
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true

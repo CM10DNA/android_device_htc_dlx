@@ -70,6 +70,16 @@ on fs
    symlink /system/vendor/pittpatt /vendor/pittpatt
    symlink /system/vendor/firmware/libpn544_fw.so /vendor/firmware/libpn544_fw.so
 
+    # Restorecon
+    restorecon /system/bin/efsks
+    restorecon /system/bin/ks
+    restorecon /system/bin/qcks
+    restorecon /system/etc/hldm.bin
+    restorecon /system/etc/hltof.bin
+    restorecon /system/etc/hltrd.bin
+    restorecon /system/etc/firmware/a300_pfp.fw
+    restorecon /system/etc/firmware/a300_pm4.fw
+
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
@@ -297,6 +307,7 @@ service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
 service kickstart /system/bin/qcks -1 modem_st1 -2 modem_st2 -3 radio_config -4 cdma_record -i /vendor/firmware/
 	class core
 	user root
+        seclabel u:r:kickstart:s0
 	oneshot
 
 service startup /system/bin/sh /init.qcom.sh
@@ -311,14 +322,14 @@ service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
 service wpa_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
     user root
     group wifi inet
-    socket wpa_wlan0 dgram 0660 wifi wifi
+    socket wpa_wlan0 dgram 0660 wifi wifi  u:object_r:wpa_socket:s0
     disabled
     oneshot
 
 service p2p_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
     user root
     group wifi inet
-    socket wpa_wlan0 dgram 0660 wifi wifi
+    socket wpa_wlan0 dgram 0660 wifi wifi u:object_r:wpa_socket:s0
     disabled
     oneshot
 

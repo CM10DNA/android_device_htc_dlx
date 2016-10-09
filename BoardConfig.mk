@@ -26,6 +26,7 @@
 
 # inherit from common msm8960
 -include device/htc/msm8960-common/BoardConfigCommon.mk
+TARGET_CPU_VARIANT=krait
 
 TARGET_SPECIFIC_HEADER_PATH := device/htc/dlx/include
 
@@ -116,6 +117,7 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1946156032
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 12482248704
 BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_VOLD_MAX_PARTITIONS := 36
+RECOVERY_FSTAB_VERSION := 2
 
 # Added for Clockworkmod
 BOARD_CUSTOM_GRAPHICS := ../../../device/htc/dlx/recovery/graphics.c
